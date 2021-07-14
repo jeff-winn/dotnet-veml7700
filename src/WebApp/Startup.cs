@@ -31,7 +31,7 @@ namespace WebApp
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApp", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hunter Rain-Clik Sensor", Version = "v1" });
             });
         }
 
@@ -48,7 +48,6 @@ namespace WebApp
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"));
             }
 
-            app.UseHttpsRedirection();
             app.UseRouting();            
             app.UseAuthorization();
 

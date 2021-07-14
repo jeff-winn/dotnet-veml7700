@@ -5,7 +5,7 @@ using WebApp.Infrastructure.Primitives;
 namespace WebApp.Controllers
 {
     [ApiController]
-    [Route("api/v1/rain-sensor")]
+    [Route("api/v1/sensor")]
     public class SensorController : ControllerBase
     {
         private readonly IGpioController gpio;

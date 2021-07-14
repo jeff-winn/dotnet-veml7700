@@ -27,6 +27,8 @@ namespace WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddWebAppServices();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApp", Version = "v1" });

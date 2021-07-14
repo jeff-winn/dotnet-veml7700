@@ -26,7 +26,6 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -40,14 +39,15 @@ namespace WebApp
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            
+            if (Configuration.SwaggerEnabled()) {
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApp v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"));
             }
 
             app.UseHttpsRedirection();
-
-            app.UseRouting();
-
+            app.UseRouting();            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -1,0 +1,43 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": ".NET Core Launch (remote console)",
+			"type": "coreclr",
+			"request": "launch",
+			"preLaunchTask": "publish",
+			"program": "/home/pi/.dotnet/dotnet",
+			"args": [
+				"/home/pi/app/WebApp.dll",
+				"--urls",
+				"http://raspberrypi.local:8080"
+			],
+			"cwd": "/home/pi/app",
+			"stopAtEntry": false,
+			"console": "internalConsole",
+			"launchBrowser": {
+				"enabled": true,
+				"windows": {
+                    "command": "cmd.exe",
+                    "args": "/C start \"\" \"http://raspberrypi.local:8080/swagger\""
+                }
+			},
+			"env": {
+				"ASPNETCORE_ENVIRONMENT": "Development"
+			},
+			"pipeTransport": {
+				"pipeCwd": "${workspaceFolder}",
+				"pipeProgram": "C:\\Program Files\\PuTTY\\PLINK.EXE",
+				"pipeArgs": [
+					"raspberrypi.local",
+					"-l",
+					"root"					
+				],
+				"debuggerPath": "/home/pi/vsdbg/vsdbg"
+			}
+		}
+	]
+}

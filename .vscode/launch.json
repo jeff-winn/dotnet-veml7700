@@ -11,18 +11,18 @@
 			"preLaunchTask": "publish",
 			"program": "/home/pi/.dotnet/dotnet",
 			"args": [
-				"/home/pi/app/WebApp.dll",
+				"/home/pi/app/net5.0/WebApp.dll",
 				"--urls",
-				"http://raspberrypi.local:8080"
+				"http://raspberrypi:8080"
 			],
-			"cwd": "/home/pi/app",
+			"cwd": "/home/pi/app/net5.0",
 			"stopAtEntry": false,
 			"console": "internalConsole",
 			"launchBrowser": {
 				"enabled": true,
 				"windows": {
                     "command": "cmd.exe",
-                    "args": "/C start \"\" \"http://raspberrypi.local:8080/swagger\""
+                    "args": "/C start \"\" \"http://raspberrypi:8080/swagger\""
                 }
 			},
 			"env": {
@@ -32,7 +32,7 @@
 				"pipeCwd": "${workspaceFolder}",
 				"pipeProgram": "C:\\Program Files\\PuTTY\\PLINK.EXE",
 				"pipeArgs": [
-					"raspberrypi.local",
+					"raspberrypi",
 					"-l",
 					"root"					
 				],

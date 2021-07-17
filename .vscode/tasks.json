@@ -10,22 +10,21 @@
 			"command": "scp",
 			"args": [
 				"-r",
-				"${workspaceFolder}/src/WebApp/bin/Debug/net5.0/",
-				"pi@raspberrypi.local:/home/pi/app"				
+				"${workspaceFolder}/src/WebApp/bin/Debug/net5.0",
+				"pi@raspberrypi:/home/pi/app/"
 			],
 			"presentation": {
 				"reveal": "silent"
-			}
-		},		
+			},
+			"problemMatcher": []
+		},
 		{
 			"label": "build",
 			"command": "dotnet",
 			"type": "shell",
 			"args": [
 				"build",
-				// Ask dotnet build to generate full paths for file names.
 				"/property:GenerateFullPaths=true",
-				// Do not generate summary otherwise it leads to duplicate errors in Problems panel
 				"/consoleloggerparameters:NoSummary"
 			],
 			"group": {

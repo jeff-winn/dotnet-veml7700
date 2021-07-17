@@ -2,10 +2,10 @@
 using Microsoft.Extensions.Logging;
 using WebApp.Infrastructure.Primitives;
 
-namespace WebApp.Controllers
+namespace WebApp.Controllers.v1
 {
     [ApiController]
-    [Route("api/v1/sensor")]
+    [Route("api/v1/rain-clik/sensor")]
     public class SensorController : ControllerBase
     {
         private readonly IGpioController gpio;
@@ -17,10 +17,10 @@ namespace WebApp.Controllers
             this.logger = logger;
         }
 
-        [HttpGet]
-        public int Get()
+        [HttpGet("inspect")]
+        public bool Get()
         {
-            return 1;
+            return true;
         }
     }
 }

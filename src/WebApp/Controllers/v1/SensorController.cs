@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using WebApp.Infrastructure.Primitives;
+using WebApp.Infrastructure.Devices;
 
 namespace WebApp.Controllers.v1
 {
@@ -8,13 +7,11 @@ namespace WebApp.Controllers.v1
     [Route("api/v1/rain-sensor")]
     public class SensorController : ControllerBase
     {
-        private readonly IGpioController gpio;
-        private readonly ILogger<SensorController> logger;
+        private readonly IAdafruit_VEML7700 sensor;
 
-        public SensorController(IGpioController gpio, ILogger<SensorController> logger)
-        {
-            this.gpio = gpio;
-            this.logger = logger;
+        public SensorController(IAdafruit_VEML7700 sensor)
+        {            
+            this.sensor = sensor;
         }
 
         [HttpGet("inspect")]

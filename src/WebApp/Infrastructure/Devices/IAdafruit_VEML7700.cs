@@ -1,3 +1,7 @@
+// https://github.com/adafruit/Adafruit_VEML7700
+// https://github.com/adafruit/Adafruit_BusIO/blob/master/Adafruit_BusIO_Register.h
+// https://learn.adafruit.com/adafruit-veml7700/arduino
+
 namespace WebApp.Infrastructure.Devices {
     public enum GainLevel : byte { 
         Level1 = 0x00,

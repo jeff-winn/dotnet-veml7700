@@ -7,17 +7,17 @@ namespace WebApp.Controllers.v1
     [Route("api/v1/rain-sensor")]
     public class SensorController : ControllerBase
     {
-        private readonly ISensorService sensorService;
+        private readonly IInspectionService inspectionService;
 
-        public SensorController(ISensorService sensorService)
+        public SensorController(IInspectionService inspectionService)
         {            
-            this.sensorService = sensorService;
+            this.inspectionService = inspectionService;
         }
 
         [HttpGet("inspect")]
         public bool Get()
         {
-            return sensorService.Inspect();
+            return inspectionService.Inspect();
         }
     }
 }

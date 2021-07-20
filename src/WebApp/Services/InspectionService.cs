@@ -1,11 +1,11 @@
 using WebApp.Infrastructure.Devices;
 
 namespace WebApp.Services {
-    public class SensorService : ISensorService
+    public class InspectionService : IInspectionService
     {
         private readonly IAdafruit_VEML7700 driver;
         
-        public SensorService(IAdafruit_VEML7700 driver) {
+        public InspectionService(IAdafruit_VEML7700 driver) {
             this.driver = driver;
         }
 

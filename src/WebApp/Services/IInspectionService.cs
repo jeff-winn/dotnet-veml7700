@@ -1,5 +1,5 @@
 namespace WebApp.Services {
-    public interface ISensorService { 
+    public interface IInspectionService { 
         bool Inspect();
     }
 }

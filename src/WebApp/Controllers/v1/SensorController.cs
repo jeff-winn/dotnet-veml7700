@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebApp.Infrastructure.Devices;
+using WebApp.Services;
 
 namespace WebApp.Controllers.v1
 {
@@ -7,17 +7,17 @@ namespace WebApp.Controllers.v1
     [Route("api/v1/rain-sensor")]
     public class SensorController : ControllerBase
     {
-        private readonly IAdafruit_VEML7700 sensor;
+        private readonly ISensorService sensorService;
 
-        public SensorController(IAdafruit_VEML7700 sensor)
+        public SensorController(ISensorService sensorService)
         {            
-            this.sensor = sensor;
+            this.sensorService = sensorService;
         }
 
         [HttpGet("inspect")]
         public bool Get()
         {
-            return true;
+            return sensorService.Inspect();
         }
     }
 }

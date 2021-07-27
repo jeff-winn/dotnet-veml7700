@@ -6,7 +6,6 @@
 	],	
 	"settings": {
 		"files.exclude": {
-			"docs": true,
 			"**/bin": true,
 			"**/obj": true,			
 			"**/.git": true,

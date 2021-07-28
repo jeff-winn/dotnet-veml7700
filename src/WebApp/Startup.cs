@@ -20,7 +20,7 @@ namespace WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddWebAppServices();
+            services.AddWebAppServices(Configuration);
 
             services.AddSwaggerGen(c =>
             {               

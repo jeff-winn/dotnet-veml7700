@@ -1,4 +1,3 @@
-using WebApp.Infrastructure.Configuration;
 using WebApp.Infrastructure.Devices;
 
 namespace Microsoft.Extensions.Configuration {

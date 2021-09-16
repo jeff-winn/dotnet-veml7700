@@ -1,11 +1,35 @@
+using System;
+using System.Collections;
 using WebApp.Infrastructure.Primitives;
 
-namespace WebApp.Infrastructure.Devices {
+#pragma warning disable CS8618 // Guaranteed to be set prior to use via required call to initialize.
+
+namespace WebApp.Infrastructure.Devices
+{
     /// <summary>
     /// Device driver for the Adafruit VEML7700 hardware.
     /// </summary>
-    public class Adafruit_VEML7700 : IAdafruit_VEML7700 {
+    public class Adafruit_VEML7700 : IAdafruit_VEML7700
+    {
         private readonly II2cDevice device;
+
+        protected IAdafruit_I2CRegister config;
+        // protected IAdafruit_I2CRegister highThreshold;
+        // protected IAdafruit_I2CRegister lowThreshold;
+        // protected IAdafruit_I2CRegister powerSaving;
+        // protected IAdafruit_I2CRegister data;
+        // protected IAdafruit_I2CRegister whiteData;
+        // protected IAdafruit_I2CRegister interruptStatus;
+
+        // protected IAdafruit_I2CRegisterBits shutdown;
+        // protected IAdafruit_I2CRegisterBits interruptEnable;
+        // protected IAdafruit_I2CRegisterBits persistence;
+        // protected IAdafruit_I2CRegisterBits integrationTime;
+        // protected IAdafruit_I2CRegisterBits gain;
+        // protected IAdafruit_I2CRegisterBits powerSaveEnable;
+        // protected IAdafruit_I2CRegisterBits powerSaveMode;
+
+        private bool initialized = false;
 
         #region Constants
 
@@ -31,11 +55,11 @@ namespace WebApp.Infrastructure.Devices {
 
         /// <summary>Interrupt status for low threshold</summary>
         private const int INTERRUPT_LOW = 0x8000;
-        
+
         /// <summary>ALS irq persisance 1 sample</summary>
-        private const byte PERS_1 = 0x00; 
+        private const byte PERS_1 = 0x00;
         /// <summary>ALS irq persisance 2 samples</summary>
-        private const byte PERS_2 = 0x01; 
+        private const byte PERS_2 = 0x01;
         /// <summary>ALS irq persisance 4 samples</summary>
         private const byte PERS_4 = 0x02;
         /// <summary>ALS irq persisance 8 samples</summary>
@@ -51,17 +75,73 @@ namespace WebApp.Infrastructure.Devices {
 
         #endregion
 
-        public bool IsEnabled { get; set; }
+        public bool IsEnabled
+        {
+            get
+            {
+                GuardMustBeInitialized();
+
+                return false;                
+                // return shutdown.ReadBool();
+            }
+            set
+            {
+                GuardMustBeInitialized();
+
+                // shutdown.WriteBool(value);
+            }
+        }
 
         public GainLevel Gain { get; set; }
 
         public IntegrationTime IntegrationTime { get; set; }
 
-        public Adafruit_VEML7700(II2cDevice device) {
+        public Adafruit_VEML7700(II2cDevice device)
+        {
             this.device = device;
         }
-    
-        public void Init() {
+
+        public void Init()
+        {
+            if (initialized)
+            {
+                throw new NotSupportedException("This instance has already been initialized.");
+            }
+
+            InitializeCore();
+            initialized = true;
+        }
+
+        protected virtual void InitializeCore()
+        {
+            config = new Adafruit_I2CRegister(device, ALS_CONFIG);
+            var r = config.ReadUInt16();
+
+            config.Write(0);
+            
+            r = config.ReadUInt16();
+            // highThreshold = new Adafruit_I2CRegister(device, ALS_THRESHOLD_HIGH);
+            // lowThreshold = new Adafruit_I2CRegister(device, ALS_THRESHOLD_LOW);
+            // powerSaving = new Adafruit_I2CRegister(device, ALS_POWER_SAVE);
+            // data = new Adafruit_I2CRegister(device, ALS_DATA);
+            // whiteData = new Adafruit_I2CRegister(device, WHITE_DATA);
+            // interruptStatus = new Adafruit_I2CRegister(device, INTERRUPT_STATUS);
+
+            // shutdown = config.GetRegisterBits(1, 0);
+            // interruptEnable = config.GetRegisterBits(1, 1);
+            // persistence = config.GetRegisterBits(2, 4);
+            // integrationTime = config.GetRegisterBits(4, 6);
+            // gain = config.GetRegisterBits(2, 11);
+            // powerSaveEnable = powerSaving.GetRegisterBits(1, 0);
+            // powerSaveMode = powerSaving.GetRegisterBits(2, 1);
+        }
+
+        private void GuardMustBeInitialized()
+        {
+            if (!initialized)
+            {
+                throw new NotSupportedException("This instance has not yet been initialized.");
+            }
         }
 
         public float ReadLux()

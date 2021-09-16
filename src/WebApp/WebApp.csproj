@@ -1,15 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <RuntimeIdentifiers>linux-arm64</RuntimeIdentifiers>
-    <DebugType>portable</DebugType>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+  <Import Project="../../.build/netcore.props" />
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
-    <PackageReference Include="Iot.Device.Bindings" Version="1.4.0" />
+    <PackageReference Include="System.Device.Gpio" Version="1.5.0" />
   </ItemGroup>
 
 </Project>

@@ -5,6 +5,11 @@
 		}
 	],	
 	"settings": {
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": false,
+			"strings": false
+		},
 		"files.exclude": {
 			"**/bin": true,
 			"**/obj": true,			

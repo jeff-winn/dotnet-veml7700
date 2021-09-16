@@ -21,8 +21,8 @@
 			"launchBrowser": {
 				"enabled": true,
 				"windows": {
-                    "command": "cmd.exe",
-                    "args": "/C start \"\" \"http://raspberrypi:8080/swagger\""
+                    "command": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+                    "args": "\"http://raspberrypi:8080/swagger\""
                 }
 			},
 			"env": {

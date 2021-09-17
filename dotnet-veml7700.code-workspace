@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "./"
+		}
+	],	
+	"settings": {
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": false,
+			"strings": false
+		},
+		"files.exclude": {
+			"**/bin": true,
+			"**/obj": true,			
+			"**/.git": true,
+			"**/.svn": true,
+			"**/.hg": true,
+			"**/CVS": true,
+			"**/.DS_Store": true
+		}
+	}
+}

@@ -15,68 +15,26 @@ namespace Adafruit.Devices.Veml7700
         private readonly II2cDevice device;
 
         private II2cRegister configRegister;
-        private II2cRegister highThresholdRegister;
-        private II2cRegister lowThresholdRegister;
-        private II2cRegister powerSavingRegister;
         private II2cRegister dataRegister;
         private II2cRegister whiteDataRegister;
-        private II2cRegister interruptStatusRegister;
         private II2cRegisterBits shutdownBits;
-        private II2cRegisterBits interruptEnableBits;
-        private II2cRegisterBits persistenceBits;
         private II2cRegisterBits integrationTimeBits;
         private II2cRegisterBits gainBits;
-        private II2cRegisterBits powerSaveEnableBits;
-        private II2cRegisterBits powerSaveModeBits;
 
         private GainLevel gain;
         private IntegrationTime integrationTime;
         private float luxMultiplier;
         private bool isEnabled;
         private bool initialized;
-        private bool isInterruptEnabled;
 
         #region Constants
 
         /// <summary>Light configuration register</summary>
         private const byte ALS_CONF_0 = 0x00;
-        /// <summary>Light high threshold for irq</summary>
-        private const byte ALS_WH = 0x01;
-        /// <summary>Light low threshold for irq</summary>
-        private const byte ALS_WL = 0x02;
-        /// <summary>Power save register</summary>
-        private const byte ALS_POWER_SAVE = 0x03;
         /// <summary>The light data output</summary>
         private const byte ALS = 0x04;
-
         /// <summary>The white light data output</summary>
         private const byte WHITE = 0x05;
-
-        /// <summary>What IRQ (if any)</summary>
-        private const byte ALS_INT = 0x06;
-
-        // /// <summary>Interrupt status for high threshold</summary>
-        // private const int INTERRUPT_HIGH = 0x4000;
-
-        // /// <summary>Interrupt status for low threshold</summary>
-        // private const int INTERRUPT_LOW = 0x8000;
-
-        /// <summary>ALS irq persisance 1 sample</summary>
-        private const byte ALS_PERS_1 = 0x00;
-        /// <summary>ALS irq persisance 2 samples</summary>
-        private const byte ALS_PERS_2 = 0x01;
-        /// <summary>ALS irq persisance 4 samples</summary>
-        private const byte ALS_PERS_4 = 0x10;
-        /// <summary>ALS irq persisance 8 samples</summary>
-        private const byte ALS_PERS_8 = 0x11;
-        /// <summary>Power saving mode 1</summary>
-        private const byte PSM_1 = 0;
-        /// <summary>Power saving mode 2</summary>
-        private const byte PSM_2 = 1;
-        /// <summary>Power saving mode 3</summary>
-        private const byte PSM_3 = 2;
-        /// <summary>Power saving mode 4</summary>
-        private const byte PSM_4 = 3;
 
         #endregion
 
@@ -89,18 +47,6 @@ namespace Adafruit.Devices.Veml7700
 
                 isEnabled = value;
                 shutdownBits.Write(!value);
-            }
-        }
-
-        public bool IsInterruptEnabled 
-        {
-            get { return isInterruptEnabled; }
-            set 
-            {
-                GuardMustBeInitialized();
-                
-                isInterruptEnabled = value;
-                interruptEnableBits.Write(value);                
             }
         }
 
@@ -150,20 +96,12 @@ namespace Adafruit.Devices.Veml7700
         protected virtual void InitializeCore()
         {
             configRegister = new I2cRegister(device, ALS_CONF_0);
-            highThresholdRegister = new I2cRegister(device, ALS_WH);
-            lowThresholdRegister = new I2cRegister(device, ALS_WL);
-            powerSavingRegister = new I2cRegister(device, ALS_POWER_SAVE);
             dataRegister = new I2cRegister(device, ALS);
             whiteDataRegister = new I2cRegister(device, WHITE);
-            interruptStatusRegister = new I2cRegister(device, ALS_INT);
 
             shutdownBits = configRegister.GetRegisterBits(0, 1);
-            interruptEnableBits = configRegister.GetRegisterBits(1, 1);
-            persistenceBits = configRegister.GetRegisterBits(4, 2);
             integrationTimeBits = configRegister.GetRegisterBits(6, 4);
             gainBits = configRegister.GetRegisterBits(11, 2);
-            powerSaveEnableBits = configRegister.GetRegisterBits(0, 1);
-            powerSaveModeBits = configRegister.GetRegisterBits(1, 2);
 
             initialized = true;
         }

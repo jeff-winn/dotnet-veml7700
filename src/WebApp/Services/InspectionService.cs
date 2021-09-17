@@ -1,7 +1,5 @@
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System;
-using WebApp.Infrastructure.Configuration;
 using WebApp.Models;
 using Adafruit.Devices.Veml7700;
 
@@ -10,24 +8,22 @@ namespace WebApp.Services {
     {
         private readonly IAdafruit_VEML7700 driver;
         private readonly ILogger<InspectionService> logger;
-        private readonly ThresholdOptions thresholdOptions;
         
-        public InspectionService(IAdafruit_VEML7700 driver, ILogger<InspectionService> logger, IOptions<ThresholdOptions> thresholdOptions) 
-            : this(driver, logger, thresholdOptions.Value)
-        { }
-
-        protected InspectionService(IAdafruit_VEML7700 driver, ILogger<InspectionService> logger, ThresholdOptions thresholdOptions) {
+        public InspectionService(IAdafruit_VEML7700 driver, ILogger<InspectionService> logger) 
+        { 
             this.driver = driver ?? throw new ArgumentNullException(nameof(driver));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            this.thresholdOptions = thresholdOptions ?? throw new ArgumentNullException(nameof(thresholdOptions));
         }
 
         public LuxResponse Inspect() {
             var lux = driver.ReadLuxNormalized();
             logger.LogTrace($"Lux: {lux}");
 
+            var white = driver.ReadWhiteNormalized();
+            logger.LogTrace($"White: {white}");
+
             return new LuxResponse {
-                IsOn = lux >= thresholdOptions.Min,
+                WhiteLight = white,
                 Lux = lux
             };
         }

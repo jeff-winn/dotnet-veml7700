@@ -7,11 +7,8 @@ using WebApp.Services;
 
 namespace Microsoft.Extensions.DependencyInjection {
 	public static class ServiceCollectionBootstrapper {
-		public static IServiceCollection AddWebAppServices(this IServiceCollection services, IConfiguration configuration) {		
-			services.Configure<ThresholdOptions>(opts => {
-				configuration.Bind(ThresholdOptions.SectionName, opts);
-			});
-			
+		public static IServiceCollection AddWebAppServices(this IServiceCollection services, IConfiguration configuration) 
+		{		
 			services.AddTransient<IInspectionService, InspectionService>();
 
 			services.AddSingleton<II2cBus>(sp => {

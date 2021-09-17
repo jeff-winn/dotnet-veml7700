@@ -57,5 +57,10 @@ namespace WebApp.Infrastructure.Devices
 
             device.Write(buffer);
         }
+
+        public IAdafruit_I2CRegisterBits GetRegisterBits(byte startIndex, byte length)
+        {
+            return new Adafruit_I2CRegisterBits(this, startIndex, length);
+        }
     }
 }

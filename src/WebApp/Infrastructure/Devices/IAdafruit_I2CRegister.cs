@@ -6,6 +6,6 @@ namespace WebApp.Infrastructure.Devices
     {
         ushort ReadUInt16();
         void Write(ushort value);
-        // IAdafruit_I2CRegisterBits GetRegisterBits(byte bits, byte shift);
+        IAdafruit_I2CRegisterBits GetRegisterBits(byte startIndex, byte length);
     }
 }

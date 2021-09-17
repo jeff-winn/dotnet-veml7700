@@ -21,7 +21,7 @@ namespace WebApp.Infrastructure.Devices
         // protected IAdafruit_I2CRegister whiteData;
         // protected IAdafruit_I2CRegister interruptStatus;
 
-        // protected IAdafruit_I2CRegisterBits shutdown;
+        protected IAdafruit_I2CRegisterBits shutdown;
         // protected IAdafruit_I2CRegisterBits interruptEnable;
         // protected IAdafruit_I2CRegisterBits persistence;
         // protected IAdafruit_I2CRegisterBits integrationTime;
@@ -81,14 +81,15 @@ namespace WebApp.Infrastructure.Devices
             {
                 GuardMustBeInitialized();
 
-                return false;                
-                // return shutdown.ReadBool();
+                // The device has the bit flipped for enabled/disabled, so this is intentional.
+                return !shutdown.ReadBool();
             }
             set
             {
                 GuardMustBeInitialized();
 
-                // shutdown.WriteBool(value);
+                // The device has the bit flipped for enabled/disabled, so this is intentional.
+                shutdown.Write(!value);
             }
         }
 
@@ -115,11 +116,6 @@ namespace WebApp.Infrastructure.Devices
         protected virtual void InitializeCore()
         {
             config = new Adafruit_I2CRegister(device, ALS_CONFIG);
-            var r = config.ReadUInt16();
-
-            config.Write(0);
-            
-            r = config.ReadUInt16();
             // highThreshold = new Adafruit_I2CRegister(device, ALS_THRESHOLD_HIGH);
             // lowThreshold = new Adafruit_I2CRegister(device, ALS_THRESHOLD_LOW);
             // powerSaving = new Adafruit_I2CRegister(device, ALS_POWER_SAVE);
@@ -127,13 +123,13 @@ namespace WebApp.Infrastructure.Devices
             // whiteData = new Adafruit_I2CRegister(device, WHITE_DATA);
             // interruptStatus = new Adafruit_I2CRegister(device, INTERRUPT_STATUS);
 
-            // shutdown = config.GetRegisterBits(1, 0);
+            shutdown = config.GetRegisterBits(0, 1);
             // interruptEnable = config.GetRegisterBits(1, 1);
-            // persistence = config.GetRegisterBits(2, 4);
-            // integrationTime = config.GetRegisterBits(4, 6);
-            // gain = config.GetRegisterBits(2, 11);
-            // powerSaveEnable = powerSaving.GetRegisterBits(1, 0);
-            // powerSaveMode = powerSaving.GetRegisterBits(2, 1);
+            // persistence = config.GetRegisterBits(4, 2);
+            // integrationTime = config.GetRegisterBits(6, 4);
+            // gain = config.GetRegisterBits(11, 2);
+            // powerSaveEnable = powerSaving.GetRegisterBits(0, 1);
+            // powerSaveMode = powerSaving.GetRegisterBits(1, 2);
         }
 
         private void GuardMustBeInitialized()

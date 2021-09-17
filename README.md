@@ -1,2 +1,2 @@
-# dotnet-rain-clik
-.NET Core Web API to expose the Hunter Rain Clik sensor status
+# dotnet-veml7700
+.NET Core Web API to expose the sensor values from a VEML7700 light sensor.

@@ -1,5 +1,7 @@
+using WebApp.Models;
+
 namespace WebApp.Services {
     public interface IInspectionService { 
-        bool Inspect();
+        LuxResponse Inspect();
     }
 }

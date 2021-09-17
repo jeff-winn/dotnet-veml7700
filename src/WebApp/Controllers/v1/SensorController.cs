@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApp.Models;
 using WebApp.Services;
 
 namespace WebApp.Controllers.v1
@@ -15,7 +16,7 @@ namespace WebApp.Controllers.v1
         }
 
         [HttpGet("inspect")]
-        public bool Get()
+        public LuxResponse Get()
         {
             return inspectionService.Inspect();
         }

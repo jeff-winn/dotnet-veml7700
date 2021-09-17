@@ -1,5 +1,6 @@
 using System.Device.I2c;
 using Microsoft.Extensions.Configuration;
+using WebApp.Infrastructure.Configuration;
 using WebApp.Infrastructure.Devices;
 using WebApp.Infrastructure.Primitives;
 using WebApp.Services;
@@ -7,6 +8,10 @@ using WebApp.Services;
 namespace Microsoft.Extensions.DependencyInjection {
 	public static class ServiceCollectionBootstrapper {
 		public static IServiceCollection AddWebAppServices(this IServiceCollection services, IConfiguration configuration) {		
+			services.Configure<ThresholdOptions>(opts => {
+				configuration.Bind(ThresholdOptions.SectionName, opts);
+			});
+			
 			services.AddTransient<IInspectionService, InspectionService>();
 
 			services.AddSingleton<II2cBus>(sp => {
@@ -23,9 +28,12 @@ namespace Microsoft.Extensions.DependencyInjection {
 				var driver = new Adafruit_VEML7700(
 					bus.CreateDevice(options.DeviceAddress));
 					
-				driver.Init();			
-				driver.IsEnabled = true;
+				driver.Init();
 
+				driver.IsEnabled = true;
+				driver.Gain = options.Gain;
+				driver.IntegrationTime = options.IntegrationTime;
+				
 				return driver;
 			});
 

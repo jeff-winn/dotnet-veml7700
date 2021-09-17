@@ -28,11 +28,12 @@ namespace WebApp.Infrastructure.Devices
         private IAdafruit_I2CRegisterBits powerSaveEnableBits;
         private IAdafruit_I2CRegisterBits powerSaveModeBits;
 
-        private float luxMultiplier;
         private GainLevel gain;
         private IntegrationTime integrationTime;
-
+        private float luxMultiplier;
+        private bool isEnabled;
         private bool initialized;
+        private bool isInterruptEnabled;
 
         #region Constants
 
@@ -80,56 +81,46 @@ namespace WebApp.Infrastructure.Devices
 
         public bool IsEnabled
         {
-            get
-            {
-                GuardMustBeInitialized();
-
-                // The device has the bit flipped for enabled/disabled, so this is intentional.
-                return !shutdownBits.ReadBool();
-            }
+            get { return isEnabled; }
             set
             {
                 GuardMustBeInitialized();
 
-                // The device has the bit flipped for enabled/disabled, so this is intentional.
+                isEnabled = value;
                 shutdownBits.Write(!value);
             }
         }
 
         public bool IsInterruptEnabled 
         {
-            get 
-            {
-                GuardMustBeInitialized();
-
-                return interruptEnableBits.ReadBool();
-            }
+            get { return isInterruptEnabled; }
             set 
             {
                 GuardMustBeInitialized();
-
+                
+                isInterruptEnabled = value;
                 interruptEnableBits.Write(value);                
             }
         }
 
         public GainLevel Gain 
         {
-            get {
-                return gain;
-            }
-            set {                
+            get { return gain; }
+            set {
                 gain = value;
+                gainBits.Write((byte)value);
+
                 AdjustLuxMultiplier();
             }
         }
 
         public IntegrationTime IntegrationTime 
         {
-            get {
-                return integrationTime;
-            }
+            get { return integrationTime; }
             set {
                 integrationTime = value;
+                integrationTimeBits.Write((byte)value);
+
                 AdjustLuxMultiplier();            
             }
         }
@@ -148,10 +139,11 @@ namespace WebApp.Infrastructure.Devices
 
             InitializeCore();
 
-            IsEnabled = false;
-            IsInterruptEnabled = false;
-            Gain = GainLevel.Level1;
-            IntegrationTime = IntegrationTime.IT_100MS;
+            isEnabled = !shutdownBits.ReadBool();
+            gain = (GainLevel)gainBits.Read();
+            integrationTime = (IntegrationTime)integrationTimeBits.Read();
+
+            AdjustLuxMultiplier();
         }
 
         protected virtual void InitializeCore()
@@ -198,7 +190,7 @@ namespace WebApp.Infrastructure.Devices
         {
             var multiplier = 0.0036F;
 
-            switch (integrationTime) {
+            switch (IntegrationTime) {
                 case IntegrationTime.IT_400MS:
                     multiplier *= 2;
                     break;
@@ -220,7 +212,7 @@ namespace WebApp.Infrastructure.Devices
                     break;
             }
 
-            switch (gain) {
+            switch (Gain) {
                 case GainLevel.Level1:
                     multiplier *= 2;
                     break;

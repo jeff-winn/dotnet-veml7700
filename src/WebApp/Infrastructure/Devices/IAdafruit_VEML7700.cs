@@ -4,19 +4,19 @@
 
 namespace WebApp.Infrastructure.Devices {
     public enum GainLevel : byte { 
-        Level1 = 0x00,
-        Level2 = 0x01,
-        Level1_8 = 0x02,
-        Level1_4 = 0x03
+        Level1 = 0,
+        Level2 = 1,
+        Level1_8 = 2,
+        Level1_4 = 3
     }
 
-    public enum IntegrationTime : byte {        
-        IT_100MS = 0x00,
-        IT_200MS = 0x01,
-        IT_400MS = 0x02,
-        IT_800MS = 0x03,
-        IT_50MS = 0x08,
-        IT_25MS = 0x0C
+    public enum IntegrationTime : byte {
+        IT_100MS = 0,
+        IT_200MS = 1,
+        IT_400MS = 2,
+        IT_800MS = 3,
+        IT_50MS = 8,
+        IT_25MS = 12
     }
 
     /// <summary>

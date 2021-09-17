@@ -22,22 +22,22 @@ namespace WebApp.Infrastructure.Devices
             return Read() != 0;
         }
 
-        private ushort Read()
+        public byte Read()
         {
             var value = register.ReadUInt16();
             value >>= startIndex;
 
-            return (ushort)(value & ((1 << length) - 1));
+            return (byte)(value & ((1 << length) - 1));
         }
 
         public void Write(bool value)
         {
-            Write(value ? (ushort)1 : (ushort)0);
+            Write(value ? (byte)1 : (byte)0);
         }
 
-        private void Write(ushort data)
+        public void Write(byte value)
         {
-            int d = data;            
+            int d = value;            
             int val = register.ReadUInt16();
 
             var mask = (1 << length) - 1;
@@ -46,7 +46,7 @@ namespace WebApp.Infrastructure.Devices
             mask <<= startIndex;
             
             val &= ~mask;
-            val |= data << startIndex;
+            val |= value << startIndex;
 
             register.Write((ushort)val);
         }

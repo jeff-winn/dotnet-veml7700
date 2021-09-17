@@ -1,9 +1,9 @@
-using WebApp.Infrastructure.Devices;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using WebApp.Infrastructure.Configuration;
 using WebApp.Models;
+using Adafruit.Devices.Veml7700;
 
 namespace WebApp.Services {
     public class InspectionService : IInspectionService

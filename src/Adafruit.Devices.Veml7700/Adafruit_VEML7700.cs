@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
-using WebApp.Infrastructure.Primitives;
+using System.Device.I2c;
+using Adafruit.Devices.Primitives;
 
 #pragma warning disable CS8618 // Guaranteed to be set prior to use via required call to initialize.
 
-namespace WebApp.Infrastructure.Devices
+namespace Adafruit.Devices.Veml7700
 {
     /// <summary>
     /// Device driver for the Adafruit VEML7700 hardware.
@@ -13,20 +14,20 @@ namespace WebApp.Infrastructure.Devices
     {
         private readonly II2cDevice device;
 
-        private IAdafruit_I2CRegister configRegister;
-        private IAdafruit_I2CRegister highThresholdRegister;
-        private IAdafruit_I2CRegister lowThresholdRegister;
-        private IAdafruit_I2CRegister powerSavingRegister;
-        private IAdafruit_I2CRegister dataRegister;
-        private IAdafruit_I2CRegister whiteDataRegister;
-        private IAdafruit_I2CRegister interruptStatusRegister;
-        private IAdafruit_I2CRegisterBits shutdownBits;
-        private IAdafruit_I2CRegisterBits interruptEnableBits;
-        private IAdafruit_I2CRegisterBits persistenceBits;
-        private IAdafruit_I2CRegisterBits integrationTimeBits;
-        private IAdafruit_I2CRegisterBits gainBits;
-        private IAdafruit_I2CRegisterBits powerSaveEnableBits;
-        private IAdafruit_I2CRegisterBits powerSaveModeBits;
+        private II2cRegister configRegister;
+        private II2cRegister highThresholdRegister;
+        private II2cRegister lowThresholdRegister;
+        private II2cRegister powerSavingRegister;
+        private II2cRegister dataRegister;
+        private II2cRegister whiteDataRegister;
+        private II2cRegister interruptStatusRegister;
+        private II2cRegisterBits shutdownBits;
+        private II2cRegisterBits interruptEnableBits;
+        private II2cRegisterBits persistenceBits;
+        private II2cRegisterBits integrationTimeBits;
+        private II2cRegisterBits gainBits;
+        private II2cRegisterBits powerSaveEnableBits;
+        private II2cRegisterBits powerSaveModeBits;
 
         private GainLevel gain;
         private IntegrationTime integrationTime;
@@ -148,13 +149,13 @@ namespace WebApp.Infrastructure.Devices
 
         protected virtual void InitializeCore()
         {
-            configRegister = new Adafruit_I2CRegister(device, ALS_CONF_0);
-            highThresholdRegister = new Adafruit_I2CRegister(device, ALS_WH);
-            lowThresholdRegister = new Adafruit_I2CRegister(device, ALS_WL);
-            powerSavingRegister = new Adafruit_I2CRegister(device, ALS_POWER_SAVE);
-            dataRegister = new Adafruit_I2CRegister(device, ALS);
-            whiteDataRegister = new Adafruit_I2CRegister(device, WHITE);
-            interruptStatusRegister = new Adafruit_I2CRegister(device, ALS_INT);
+            configRegister = new I2cRegister(device, ALS_CONF_0);
+            highThresholdRegister = new I2cRegister(device, ALS_WH);
+            lowThresholdRegister = new I2cRegister(device, ALS_WL);
+            powerSavingRegister = new I2cRegister(device, ALS_POWER_SAVE);
+            dataRegister = new I2cRegister(device, ALS);
+            whiteDataRegister = new I2cRegister(device, WHITE);
+            interruptStatusRegister = new I2cRegister(device, ALS_INT);
 
             shutdownBits = configRegister.GetRegisterBits(0, 1);
             interruptEnableBits = configRegister.GetRegisterBits(1, 1);

@@ -1,6 +1,7 @@
 using System.Device.I2c;
 
-namespace WebApp.Infrastructure.Primitives {
+namespace Adafruit.Devices.Primitives
+{
     public class I2cBusWrapper : II2cBus {
         private readonly I2cBus bus;
 

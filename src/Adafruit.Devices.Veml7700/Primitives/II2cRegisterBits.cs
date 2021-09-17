@@ -1,8 +1,8 @@
 using System;
 
-namespace WebApp.Infrastructure.Devices
+namespace Adafruit.Devices.Primitives
 {
-    public interface IAdafruit_I2CRegisterBits
+    public interface II2cRegisterBits
     {
         byte Read();
         bool ReadBool();

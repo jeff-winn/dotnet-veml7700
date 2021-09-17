@@ -1,16 +1,14 @@
 using System;
-using System.Collections;
-using WebApp.Infrastructure.Primitives;
 
-namespace WebApp.Infrastructure.Devices
+namespace Adafruit.Devices.Primitives
 {
-    public class Adafruit_I2CRegisterBits : IAdafruit_I2CRegisterBits
+    public class I2cRegisterBits : II2cRegisterBits
     {
-        private readonly IAdafruit_I2CRegister register;
+        private readonly II2cRegister register;
         private readonly byte startIndex;
         private readonly byte length;
 
-        public Adafruit_I2CRegisterBits(IAdafruit_I2CRegister register, byte startIndex, byte length)
+        public I2cRegisterBits(II2cRegister register, byte startIndex, byte length)
         {
             this.register = register;
             this.startIndex = startIndex;

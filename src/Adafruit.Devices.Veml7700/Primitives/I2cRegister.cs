@@ -1,16 +1,15 @@
 using System;
-using System.Collections;
-using WebApp.Infrastructure.Primitives;
+using System.Device.I2c;
 
-namespace WebApp.Infrastructure.Devices
+namespace Adafruit.Devices.Primitives
 {
-    public class Adafruit_I2CRegister : IAdafruit_I2CRegister
+    public class I2cRegister : II2cRegister
     {
         private readonly II2cDevice device;
         private readonly byte[] registerAddress;
         private readonly Endianness endianness;
 
-        public Adafruit_I2CRegister(II2cDevice device, byte registerAddress, Endianness endianness = Endianness.Little)
+        public I2cRegister(II2cDevice device, byte registerAddress, Endianness endianness = Endianness.Little)
         {
             this.device = device;
             this.registerAddress = new[] {
@@ -58,9 +57,9 @@ namespace WebApp.Infrastructure.Devices
             device.Write(buffer);
         }
 
-        public IAdafruit_I2CRegisterBits GetRegisterBits(byte startIndex, byte length)
+        public II2cRegisterBits GetRegisterBits(byte startIndex, byte length)
         {
-            return new Adafruit_I2CRegisterBits(this, startIndex, length);
+            return new I2cRegisterBits(this, startIndex, length);
         }
     }
 }

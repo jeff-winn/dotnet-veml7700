@@ -1,6 +1,8 @@
-namespace WebApp.Infrastructure.Devices
+using Adafruit.Devices.Veml7700;
+
+namespace WebApp.Infrastructure.Configuration
 {
-    public class Adafruit_VEML7700_Options
+    public class Veml7700Options
     {
         public int DeviceAddress { get; set; }
         public int BusId { get; set; }

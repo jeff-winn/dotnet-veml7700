@@ -1,6 +1,7 @@
 using System;
 
-namespace WebApp.Infrastructure.Primitives {
+namespace System.Device.I2c
+{
     public interface II2cDevice {
         byte ReadByte();
         void Read(Span<byte> buffer);

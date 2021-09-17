@@ -1,7 +1,7 @@
 using System;
 using System.Device.I2c;
 
-namespace WebApp.Infrastructure.Primitives
+namespace Adafruit.Devices.Primitives
 {
     public class I2cDeviceWrapper : II2cDevice
     {

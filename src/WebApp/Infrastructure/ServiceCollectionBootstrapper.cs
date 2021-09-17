@@ -1,8 +1,8 @@
 using System.Device.I2c;
+using Adafruit.Devices.Primitives;
+using Adafruit.Devices.Veml7700;
 using Microsoft.Extensions.Configuration;
 using WebApp.Infrastructure.Configuration;
-using WebApp.Infrastructure.Devices;
-using WebApp.Infrastructure.Primitives;
 using WebApp.Services;
 
 namespace Microsoft.Extensions.DependencyInjection {

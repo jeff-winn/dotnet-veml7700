@@ -1,4 +1,4 @@
-namespace WebApp.Infrastructure.Devices
+namespace Adafruit.Devices.Primitives
 {
     public enum Endianness
     {

@@ -14,7 +14,10 @@ namespace WebApp.Services {
 
         public bool Inspect()
         {
-            return driver.IsEnabled;
+            var lux = driver.ReadLux();
+            System.Diagnostics.Debug.WriteLine(lux);
+                        
+            return false;
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Microsoft.Extensions.DependencyInjection {
 				var driver = new Adafruit_VEML7700(
 					bus.CreateDevice(options.DeviceAddress));
 					
-				driver.Init();
+				driver.Init();			
 				driver.IsEnabled = true;
 
 				return driver;

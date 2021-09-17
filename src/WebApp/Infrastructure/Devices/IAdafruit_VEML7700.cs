@@ -30,10 +30,6 @@ namespace WebApp.Infrastructure.Devices {
         void Init();
 
         float ReadLux();
-        float ReadLuxNormalized();
-
-        short ReadAls();
         float ReadWhite();
-        float ReadWhiteNormalized();
     }
 }

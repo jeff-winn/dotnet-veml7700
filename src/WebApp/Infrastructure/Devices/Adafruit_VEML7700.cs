@@ -13,21 +13,24 @@ namespace WebApp.Infrastructure.Devices
     {
         private readonly II2cDevice device;
 
-        private IAdafruit_I2CRegister config;
-        private IAdafruit_I2CRegister highThreshold;
-        private IAdafruit_I2CRegister lowThreshold;
-        private IAdafruit_I2CRegister powerSaving;
-        private IAdafruit_I2CRegister data;
-        private IAdafruit_I2CRegister whiteData;
-        private IAdafruit_I2CRegister interruptStatus;
+        private IAdafruit_I2CRegister configRegister;
+        private IAdafruit_I2CRegister highThresholdRegister;
+        private IAdafruit_I2CRegister lowThresholdRegister;
+        private IAdafruit_I2CRegister powerSavingRegister;
+        private IAdafruit_I2CRegister dataRegister;
+        private IAdafruit_I2CRegister whiteDataRegister;
+        private IAdafruit_I2CRegister interruptStatusRegister;
+        private IAdafruit_I2CRegisterBits shutdownBits;
+        private IAdafruit_I2CRegisterBits interruptEnableBits;
+        private IAdafruit_I2CRegisterBits persistenceBits;
+        private IAdafruit_I2CRegisterBits integrationTimeBits;
+        private IAdafruit_I2CRegisterBits gainBits;
+        private IAdafruit_I2CRegisterBits powerSaveEnableBits;
+        private IAdafruit_I2CRegisterBits powerSaveModeBits;
 
-        private IAdafruit_I2CRegisterBits shutdown;
-        private IAdafruit_I2CRegisterBits interruptEnable;
-        private IAdafruit_I2CRegisterBits persistence;
-        private IAdafruit_I2CRegisterBits integrationTime;
-        private IAdafruit_I2CRegisterBits gain;
-        private IAdafruit_I2CRegisterBits powerSaveEnable;
-        private IAdafruit_I2CRegisterBits powerSaveMode;
+        private float luxMultiplier;
+        private GainLevel gain;
+        private IntegrationTime integrationTime;
 
         private bool initialized;
 
@@ -82,14 +85,14 @@ namespace WebApp.Infrastructure.Devices
                 GuardMustBeInitialized();
 
                 // The device has the bit flipped for enabled/disabled, so this is intentional.
-                return !shutdown.ReadBool();
+                return !shutdownBits.ReadBool();
             }
             set
             {
                 GuardMustBeInitialized();
 
                 // The device has the bit flipped for enabled/disabled, so this is intentional.
-                shutdown.Write(!value);
+                shutdownBits.Write(!value);
             }
         }
 
@@ -99,19 +102,37 @@ namespace WebApp.Infrastructure.Devices
             {
                 GuardMustBeInitialized();
 
-                return interruptEnable.ReadBool();
+                return interruptEnableBits.ReadBool();
             }
             set 
             {
                 GuardMustBeInitialized();
 
-                interruptEnable.Write(value);                
+                interruptEnableBits.Write(value);                
             }
         }
 
-        public GainLevel Gain { get; set; }
+        public GainLevel Gain 
+        {
+            get {
+                return gain;
+            }
+            set {                
+                gain = value;
+                AdjustLuxMultiplier();
+            }
+        }
 
-        public IntegrationTime IntegrationTime { get; set; }
+        public IntegrationTime IntegrationTime 
+        {
+            get {
+                return integrationTime;
+            }
+            set {
+                integrationTime = value;
+                AdjustLuxMultiplier();            
+            }
+        }
 
         public Adafruit_VEML7700(II2cDevice device)
         {
@@ -129,25 +150,27 @@ namespace WebApp.Infrastructure.Devices
 
             IsEnabled = false;
             IsInterruptEnabled = false;
+            Gain = GainLevel.Level1;
+            IntegrationTime = IntegrationTime.IT_100MS;
         }
 
         protected virtual void InitializeCore()
         {
-            config = new Adafruit_I2CRegister(device, ALS_CONF_0);
-            highThreshold = new Adafruit_I2CRegister(device, ALS_WH);
-            lowThreshold = new Adafruit_I2CRegister(device, ALS_WL);
-            powerSaving = new Adafruit_I2CRegister(device, ALS_POWER_SAVE);
-            data = new Adafruit_I2CRegister(device, ALS);
-            whiteData = new Adafruit_I2CRegister(device, WHITE);
-            interruptStatus = new Adafruit_I2CRegister(device, ALS_INT);
+            configRegister = new Adafruit_I2CRegister(device, ALS_CONF_0);
+            highThresholdRegister = new Adafruit_I2CRegister(device, ALS_WH);
+            lowThresholdRegister = new Adafruit_I2CRegister(device, ALS_WL);
+            powerSavingRegister = new Adafruit_I2CRegister(device, ALS_POWER_SAVE);
+            dataRegister = new Adafruit_I2CRegister(device, ALS);
+            whiteDataRegister = new Adafruit_I2CRegister(device, WHITE);
+            interruptStatusRegister = new Adafruit_I2CRegister(device, ALS_INT);
 
-            shutdown = config.GetRegisterBits(0, 1);
-            interruptEnable = config.GetRegisterBits(1, 1);
-            persistence = config.GetRegisterBits(4, 2);
-            integrationTime = config.GetRegisterBits(6, 4);
-            gain = config.GetRegisterBits(11, 2);
-            powerSaveEnable = powerSaving.GetRegisterBits(0, 1);
-            powerSaveMode = powerSaving.GetRegisterBits(1, 2);
+            shutdownBits = configRegister.GetRegisterBits(0, 1);
+            interruptEnableBits = configRegister.GetRegisterBits(1, 1);
+            persistenceBits = configRegister.GetRegisterBits(4, 2);
+            integrationTimeBits = configRegister.GetRegisterBits(6, 4);
+            gainBits = configRegister.GetRegisterBits(11, 2);
+            powerSaveEnableBits = configRegister.GetRegisterBits(0, 1);
+            powerSaveModeBits = configRegister.GetRegisterBits(1, 2);
 
             initialized = true;
         }
@@ -162,17 +185,8 @@ namespace WebApp.Infrastructure.Devices
 
         public float ReadLux()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public float ReadLuxNormalized()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public short ReadAls()
-        {
-            throw new System.NotImplementedException();
+            var raw = dataRegister.ReadUInt16();        
+            return raw * luxMultiplier;
         }
 
         public float ReadWhite()
@@ -180,9 +194,47 @@ namespace WebApp.Infrastructure.Devices
             throw new System.NotImplementedException();
         }
 
-        public float ReadWhiteNormalized()
+        private void AdjustLuxMultiplier() 
         {
-            throw new System.NotImplementedException();
+            var multiplier = 0.0036F;
+
+            switch (integrationTime) {
+                case IntegrationTime.IT_400MS:
+                    multiplier *= 2;
+                    break;
+
+                case IntegrationTime.IT_200MS:
+                    multiplier *= 4;
+                    break;
+
+                case IntegrationTime.IT_100MS:
+                    multiplier *= 8;
+                    break;
+
+                case IntegrationTime.IT_50MS:
+                    multiplier *= 16;
+                    break;
+
+                case IntegrationTime.IT_25MS:
+                    multiplier *= 32;
+                    break;
+            }
+
+            switch (gain) {
+                case GainLevel.Level1:
+                    multiplier *= 2;
+                    break;
+
+                case GainLevel.Level1_4:
+                    multiplier *= 8;
+                    break;
+
+                case GainLevel.Level1_8:
+                    multiplier *= 16;
+                    break;
+            }
+
+            luxMultiplier = multiplier;
         }
     }
 }

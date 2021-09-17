@@ -65,13 +65,13 @@ namespace WebApp.Infrastructure.Devices
         /// <summary>ALS irq persisance 8 samples</summary>
         private const byte ALS_PERS_8 = 0x11;
         /// <summary>Power saving mode 1</summary>
-        private const byte PSM_1 = 0x00;
+        private const byte PSM_1 = 0;
         /// <summary>Power saving mode 2</summary>
-        private const byte PSM_2 = 0x01;
+        private const byte PSM_2 = 1;
         /// <summary>Power saving mode 3</summary>
-        private const byte PSM_3 = 0x10;
+        private const byte PSM_3 = 2;
         /// <summary>Power saving mode 4</summary>
-        private const byte PSM_4 = 0x11;
+        private const byte PSM_4 = 3;
 
         #endregion
 

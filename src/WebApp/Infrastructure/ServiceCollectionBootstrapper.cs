@@ -24,6 +24,7 @@ namespace Microsoft.Extensions.DependencyInjection {
 					bus.CreateDevice(options.DeviceAddress));
 					
 				driver.Init();
+				driver.IsEnabled = true;
 
 				return driver;
 			});

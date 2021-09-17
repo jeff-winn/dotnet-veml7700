@@ -14,18 +14,7 @@ namespace WebApp.Services {
 
         public bool Inspect()
         {
-            var current = driver.IsEnabled;
-            logger.LogInformation($"Current: {current}");
-
-            var changed = !current;
-            
-            driver.IsEnabled = changed;
-            logger.LogInformation($"Changed: {changed}");
-
-            var now = driver.IsEnabled;
-            logger.LogInformation($"Now: {now}");
-
-            return now;
+            return driver.IsEnabled;
         }
     }
 }

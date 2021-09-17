@@ -30,7 +30,9 @@ namespace Adafruit.Devices.Veml7700
 
         void Init();
 
-        float ReadLux();
-        float ReadWhite();
+        ushort ReadLux();
+        float ReadLuxNormalized();
+        ushort ReadWhite();
+        float ReadWhiteNormalized();
     }
 }

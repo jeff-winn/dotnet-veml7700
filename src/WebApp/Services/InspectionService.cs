@@ -23,7 +23,7 @@ namespace WebApp.Services {
         }
 
         public LuxResponse Inspect() {
-            var lux = driver.ReadLux();
+            var lux = driver.ReadLuxNormalized();
             logger.LogTrace($"Lux: {lux}");
 
             return new LuxResponse {

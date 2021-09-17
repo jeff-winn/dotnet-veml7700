@@ -176,15 +176,24 @@ namespace Adafruit.Devices.Veml7700
             }
         }
 
-        public float ReadLux()
+        public ushort ReadLux()
         {
-            var raw = dataRegister.ReadUInt16();        
-            return raw * luxMultiplier;
+            return dataRegister.ReadUInt16();
+        }
+        
+        public float ReadLuxNormalized() 
+        {
+            return ReadLux() * luxMultiplier;            
         }
 
-        public float ReadWhite()
+        public ushort ReadWhite()
         {
-            throw new System.NotImplementedException();
+            return whiteDataRegister.ReadUInt16();
+        }
+
+        public float ReadWhiteNormalized()
+        {
+            return ReadWhite() * luxMultiplier;
         }
 
         private void AdjustLuxMultiplier() 

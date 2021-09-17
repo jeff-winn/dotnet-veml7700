@@ -13,65 +13,65 @@ namespace WebApp.Infrastructure.Devices
     {
         private readonly II2cDevice device;
 
-        protected IAdafruit_I2CRegister config;
-        // protected IAdafruit_I2CRegister highThreshold;
-        // protected IAdafruit_I2CRegister lowThreshold;
-        // protected IAdafruit_I2CRegister powerSaving;
-        // protected IAdafruit_I2CRegister data;
-        // protected IAdafruit_I2CRegister whiteData;
-        // protected IAdafruit_I2CRegister interruptStatus;
+        private IAdafruit_I2CRegister config;
+        private IAdafruit_I2CRegister highThreshold;
+        private IAdafruit_I2CRegister lowThreshold;
+        private IAdafruit_I2CRegister powerSaving;
+        private IAdafruit_I2CRegister data;
+        private IAdafruit_I2CRegister whiteData;
+        private IAdafruit_I2CRegister interruptStatus;
 
-        protected IAdafruit_I2CRegisterBits shutdown;
-        // protected IAdafruit_I2CRegisterBits interruptEnable;
-        // protected IAdafruit_I2CRegisterBits persistence;
-        // protected IAdafruit_I2CRegisterBits integrationTime;
-        // protected IAdafruit_I2CRegisterBits gain;
-        // protected IAdafruit_I2CRegisterBits powerSaveEnable;
-        // protected IAdafruit_I2CRegisterBits powerSaveMode;
+        private IAdafruit_I2CRegisterBits shutdown;
+        private IAdafruit_I2CRegisterBits interruptEnable;
+        private IAdafruit_I2CRegisterBits persistence;
+        private IAdafruit_I2CRegisterBits integrationTime;
+        private IAdafruit_I2CRegisterBits gain;
+        private IAdafruit_I2CRegisterBits powerSaveEnable;
+        private IAdafruit_I2CRegisterBits powerSaveMode;
 
-        private bool initialized = false;
+        private bool initialized;
 
         #region Constants
 
         /// <summary>Light configuration register</summary>
-        private const byte ALS_CONFIG = 0x00;
+        private const byte ALS_CONF_0 = 0x00;
         /// <summary>Light high threshold for irq</summary>
-        private const byte ALS_THRESHOLD_HIGH = 0x01;
+        private const byte ALS_WH = 0x01;
         /// <summary>Light low threshold for irq</summary>
-        private const byte ALS_THRESHOLD_LOW = 0x02;
+        private const byte ALS_WL = 0x02;
         /// <summary>Power save register</summary>
         private const byte ALS_POWER_SAVE = 0x03;
         /// <summary>The light data output</summary>
-        private const byte ALS_DATA = 0x04;
+        private const byte ALS = 0x04;
 
         /// <summary>The white light data output</summary>
-        private const byte WHITE_DATA = 0x05;
+        private const byte WHITE = 0x05;
 
         /// <summary>What IRQ (if any)</summary>
-        private const byte INTERRUPT_STATUS = 0x06;
+        private const byte ALS_INT = 0x06;
 
-        /// <summary>Interrupt status for high threshold</summary>
-        private const int INTERRUPT_HIGH = 0x4000;
+        // /// <summary>Interrupt status for high threshold</summary>
+        // private const int INTERRUPT_HIGH = 0x4000;
 
-        /// <summary>Interrupt status for low threshold</summary>
-        private const int INTERRUPT_LOW = 0x8000;
+        // /// <summary>Interrupt status for low threshold</summary>
+        // private const int INTERRUPT_LOW = 0x8000;
 
         /// <summary>ALS irq persisance 1 sample</summary>
-        private const byte PERS_1 = 0x00;
+        private const byte ALS_PERS_1 = 0x00;
         /// <summary>ALS irq persisance 2 samples</summary>
-        private const byte PERS_2 = 0x01;
+        private const byte ALS_PERS_2 = 0x01;
         /// <summary>ALS irq persisance 4 samples</summary>
-        private const byte PERS_4 = 0x02;
+        private const byte ALS_PERS_4 = 0x10;
         /// <summary>ALS irq persisance 8 samples</summary>
-        private const byte PERS_8 = 0x03;
+        private const byte ALS_PERS_8 = 0x11;
         /// <summary>Power saving mode 1</summary>
-        private const byte POWERSAVE_MODE1 = 0x00;
+        private const byte PSM_1 = 0x00;
         /// <summary>Power saving mode 2</summary>
-        private const byte POWERSAVE_MODE2 = 0x01;
+        private const byte PSM_2 = 0x01;
         /// <summary>Power saving mode 3</summary>
-        private const byte POWERSAVE_MODE3 = 0x02;
+        private const byte PSM_3 = 0x10;
         /// <summary>Power saving mode 4</summary>
-        private const byte POWERSAVE_MODE4 = 0x03;
+        private const byte PSM_4 = 0x11;
 
         #endregion
 
@@ -93,6 +93,22 @@ namespace WebApp.Infrastructure.Devices
             }
         }
 
+        public bool IsInterruptEnabled 
+        {
+            get 
+            {
+                GuardMustBeInitialized();
+
+                return interruptEnable.ReadBool();
+            }
+            set 
+            {
+                GuardMustBeInitialized();
+
+                interruptEnable.Write(value);                
+            }
+        }
+
         public GainLevel Gain { get; set; }
 
         public IntegrationTime IntegrationTime { get; set; }
@@ -110,26 +126,30 @@ namespace WebApp.Infrastructure.Devices
             }
 
             InitializeCore();
-            initialized = true;
+
+            IsEnabled = false;
+            IsInterruptEnabled = false;
         }
 
         protected virtual void InitializeCore()
         {
-            config = new Adafruit_I2CRegister(device, ALS_CONFIG);
-            // highThreshold = new Adafruit_I2CRegister(device, ALS_THRESHOLD_HIGH);
-            // lowThreshold = new Adafruit_I2CRegister(device, ALS_THRESHOLD_LOW);
-            // powerSaving = new Adafruit_I2CRegister(device, ALS_POWER_SAVE);
-            // data = new Adafruit_I2CRegister(device, ALS_DATA);
-            // whiteData = new Adafruit_I2CRegister(device, WHITE_DATA);
-            // interruptStatus = new Adafruit_I2CRegister(device, INTERRUPT_STATUS);
+            config = new Adafruit_I2CRegister(device, ALS_CONF_0);
+            highThreshold = new Adafruit_I2CRegister(device, ALS_WH);
+            lowThreshold = new Adafruit_I2CRegister(device, ALS_WL);
+            powerSaving = new Adafruit_I2CRegister(device, ALS_POWER_SAVE);
+            data = new Adafruit_I2CRegister(device, ALS);
+            whiteData = new Adafruit_I2CRegister(device, WHITE);
+            interruptStatus = new Adafruit_I2CRegister(device, ALS_INT);
 
             shutdown = config.GetRegisterBits(0, 1);
-            // interruptEnable = config.GetRegisterBits(1, 1);
-            // persistence = config.GetRegisterBits(4, 2);
-            // integrationTime = config.GetRegisterBits(6, 4);
-            // gain = config.GetRegisterBits(11, 2);
-            // powerSaveEnable = powerSaving.GetRegisterBits(0, 1);
-            // powerSaveMode = powerSaving.GetRegisterBits(1, 2);
+            interruptEnable = config.GetRegisterBits(1, 1);
+            persistence = config.GetRegisterBits(4, 2);
+            integrationTime = config.GetRegisterBits(6, 4);
+            gain = config.GetRegisterBits(11, 2);
+            powerSaveEnable = powerSaving.GetRegisterBits(0, 1);
+            powerSaveMode = powerSaving.GetRegisterBits(1, 2);
+
+            initialized = true;
         }
 
         private void GuardMustBeInitialized()

@@ -30,7 +30,7 @@ namespace WebApp
 
             services.AddSwaggerGen(c =>
             {               
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hunter Rain-Clik Sensor", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Adafruit VEML7700 Lux Sensor", Version = "v1" });
             });
         }
 

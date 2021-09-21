@@ -5,7 +5,7 @@ using WebApp.Services;
 namespace WebApp.Controllers.v1
 {
     [ApiController]
-    [Route("api/v1/rain-sensor")]
+    [Route("api/v1/light-sensor")]
     public class SensorController : ControllerBase
     {
         private readonly IInspectionService inspectionService;

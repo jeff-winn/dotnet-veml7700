@@ -27,7 +27,7 @@ namespace Microsoft.Extensions.DependencyInjection {
 					var bus = sp.GetRequiredService<II2cBus>();
 					var options = configuration.GetVeml7700Options();
 					
-					var driver = new Adafruit_VEML7700(
+					driver = new Adafruit_VEML7700(
 						bus.CreateDevice(options.DeviceAddress));
 						
 					driver.Init();

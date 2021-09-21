@@ -19,18 +19,24 @@ namespace Microsoft.Extensions.DependencyInjection {
 			});
 
 			services.AddSingleton<IAdafruit_VEML7700>(sp => {
-				var bus = sp.GetRequiredService<II2cBus>();
-				var options = configuration.GetVeml7700Options();
+				IAdafruit_VEML7700 driver = null;
 				
-				var driver = new Adafruit_VEML7700(
-					bus.CreateDevice(options.DeviceAddress));
+				#if DEBUG
+					driver = new FakeAdafruit_VEML7700(300, 300.15F, 300, 300.15F);
+				#else
+					var bus = sp.GetRequiredService<II2cBus>();
+					var options = configuration.GetVeml7700Options();
 					
-				driver.Init();
+					driver = new Adafruit_VEML7700(
+						bus.CreateDevice(options.DeviceAddress));
+						
+					driver.Init();
 
-				driver.IsEnabled = true;
-				driver.Gain = options.Gain;
-				driver.IntegrationTime = options.IntegrationTime;
-				
+					driver.IsEnabled = true;
+					driver.Gain = options.Gain;
+					driver.IntegrationTime = options.IntegrationTime;
+				#endif
+
 				return driver;
 			});
 

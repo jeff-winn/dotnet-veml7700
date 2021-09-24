@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApp.Exceptions;
 using WebApp.Models;
 using WebApp.Services;
 
@@ -15,10 +16,20 @@ namespace WebApp.Controllers.v1
             this.inspectionService = inspectionService;
         }
 
-        [HttpGet("inspect")]
-        public LuxResponse Get()
+        [HttpGet("inspect/{deviceId}")]
+        public IActionResult Get(int deviceId)
         {
-            return inspectionService.Inspect();
+            if (deviceId < 0) {
+                return NotFound();
+            }
+
+            try {
+                var response = inspectionService.Inspect(deviceId);
+                return Ok(response);
+            }
+            catch (DeviceNotFoundException) {
+                return NotFound();
+            }
         }
     }
 }

@@ -7,6 +7,8 @@ using WebApp.Infrastructure.Factories;
 namespace WebApp.Services {
     public class InspectionService : IInspectionService
     {
+        private const int MaxDevices = 128;
+
         private readonly IVeml7700DriverFactory factory;
         private readonly ILogger<InspectionService> logger;
         
@@ -16,7 +18,11 @@ namespace WebApp.Services {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public LuxResponse Inspect(int deviceId) {            
+        public LuxResponse Inspect(int deviceId) {
+            if (deviceId < 0 || deviceId > MaxDevices) {
+                throw new BadRequestException($"The device id must be greater than or equal to 0 and less than {MaxDevices}.");
+            }
+
             var driver = factory.Create(deviceId);
             if (driver == null) {
                 throw new DeviceNotFoundException(deviceId);

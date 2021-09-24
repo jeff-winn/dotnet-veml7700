@@ -19,13 +19,14 @@ namespace WebApp.Controllers.v1
         [HttpGet("inspect/{deviceId}")]
         public IActionResult Get(int deviceId)
         {
-            if (deviceId < 0) {
-                return NotFound();
-            }
-
             try {
                 var response = inspectionService.Inspect(deviceId);
                 return Ok(response);
+            }
+            catch (BadRequestException ex) {
+                return BadRequest(new ErrorResponse {
+                    ErrorMessage = ex.Message
+                });
             }
             catch (DeviceNotFoundException) {
                 return NotFound();

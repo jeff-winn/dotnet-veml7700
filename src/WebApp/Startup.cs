@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using WebApp.Infrastructure.Extensions;
 
 namespace WebApp
 {
@@ -28,9 +29,10 @@ namespace WebApp
             services.AddControllers();
             services.AddWebAppServices(Configuration);
 
-            services.AddSwaggerGen(c =>
-            {               
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Adafruit VEML7700 Lux Sensor", Version = "v1" });
+            services.AddSwaggerGen(opts =>
+            {
+                opts.ScanForXmlComments("WebApp*.xml");
+                opts.SwaggerDoc("v1", new OpenApiInfo { Title = "Adafruit VEML7700 Light Sensor", Version = "v1" });
             });
         }
 

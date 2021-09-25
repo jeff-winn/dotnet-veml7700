@@ -5,7 +5,7 @@ using WebApp.Exceptions;
 using WebApp.Infrastructure.Factories;
 
 namespace WebApp.Services {
-    public class InspectionService : IInspectionService
+    class InspectionService : IInspectionService
     {
         private const int MaxDevices = 128;
 

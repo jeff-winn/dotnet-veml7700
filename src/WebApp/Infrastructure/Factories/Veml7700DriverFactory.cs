@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using WebApp.Exceptions;
 
 namespace WebApp.Infrastructure.Factories {
-    public class Veml7700DriverFactory : IVeml7700DriverFactory
+    class Veml7700DriverFactory : IVeml7700DriverFactory
     {
         private readonly II2cBus bus;
         private readonly IConfiguration configuration;

@@ -1,7 +1,7 @@
 using System;
 
 namespace WebApp.Exceptions {
-    public class DeviceNotFoundException : Exception {
+    class DeviceNotFoundException : Exception {
         public int DeviceId { get; }
 
         public DeviceNotFoundException(int deviceId) 

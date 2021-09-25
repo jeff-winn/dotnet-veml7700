@@ -7,12 +7,19 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace WebApp.Controllers.v1
 {
+    /// <summary>
+    /// Interacts with the sensor hardware.
+    /// </summary>
     [ApiController]
     [Route("api/v1/light-sensor")]
     public class SensorController : ControllerBase
     {
         private readonly IInspectionService inspectionService;
 
+        /// <summary>
+        /// Initializes an instance of the <see cref="SensorController" /> class.
+        /// </summary>
+        /// <param name="inspectionService">The inspection service.</param>
         public SensorController(IInspectionService inspectionService)
         {            
             this.inspectionService = inspectionService;

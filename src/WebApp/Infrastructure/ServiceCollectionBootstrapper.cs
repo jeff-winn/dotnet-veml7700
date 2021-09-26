@@ -5,7 +5,7 @@ using WebApp.Infrastructure.Factories;
 using WebApp.Services;
 
 namespace Microsoft.Extensions.DependencyInjection {
-	public static class ServiceCollectionBootstrapper {
+	static class ServiceCollectionBootstrapper {
 		public static IServiceCollection AddWebAppServices(this IServiceCollection services, IConfiguration configuration) 
 		{		
 			services.AddTransient<IInspectionService, InspectionService>();

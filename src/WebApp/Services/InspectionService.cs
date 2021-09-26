@@ -5,7 +5,7 @@ using WebApp.Exceptions;
 using WebApp.Infrastructure.Factories;
 
 namespace WebApp.Services {
-    public class InspectionService : IInspectionService
+    class InspectionService : IInspectionService
     {
         private const int MaxDevices = 128;
 
@@ -18,14 +18,14 @@ namespace WebApp.Services {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public LuxResponse Inspect(int deviceId) {
-            if (deviceId < 0 || deviceId > MaxDevices) {
+        public LuxResponse Inspect(int deviceAddress) {
+            if (deviceAddress < 0 || deviceAddress > MaxDevices) {
                 throw new BadRequestException($"The device id must be greater than or equal to 0 and less than {MaxDevices}.");
             }
 
-            var driver = factory.Create(deviceId);
+            var driver = factory.Create(deviceAddress);
             if (driver == null) {
-                throw new DeviceNotFoundException(deviceId);
+                throw new DeviceNotFoundException(deviceAddress);
             }
 
             var lux = driver.ReadLuxNormalized();

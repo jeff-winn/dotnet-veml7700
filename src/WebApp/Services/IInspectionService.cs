@@ -2,6 +2,6 @@ using WebApp.Models;
 
 namespace WebApp.Services {
     public interface IInspectionService { 
-        LuxResponse Inspect(int deviceId);
+        LuxResponse Inspect(int deviceAddress);
     }
 }

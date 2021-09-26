@@ -16,10 +16,6 @@ namespace WebApp.Controllers.v1
     {
         private readonly IInspectionService inspectionService;
 
-        /// <summary>
-        /// Initializes an instance of the <see cref="SensorController" /> class.
-        /// </summary>
-        /// <param name="inspectionService">The inspection service.</param>
         public SensorController(IInspectionService inspectionService)
         {            
             this.inspectionService = inspectionService;
@@ -28,17 +24,18 @@ namespace WebApp.Controllers.v1
         /// <summary>
         /// Inspect device.
         /// </summary>
+        /// <param name="deviceAddress">The I2C address of the device.</param>
         /// <remarks>
-        /// Inspects a specific Adafruit VEML7700 device at the device id address provided on the I2C bus.
+        /// Inspects a specific Adafruit VEML7700 device at the device address provided on the I2C bus.
         /// </remarks>
-        [HttpGet("{deviceId}")]
+        [HttpGet("{deviceAddress}")]
         [SwaggerResponse(StatusCodes.Status200OK, "The response successfully was able to read the light sensor data.", typeof(LuxResponse))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "The request was not valid.", typeof(ErrorResponse))]
         [SwaggerResponse(StatusCodes.Status404NotFound, "The light sensor requested was not found.", typeof(ErrorResponse))]
-        public IActionResult Get(int deviceId)
+        public IActionResult Get(int deviceAddress)
         {
             try {
-                var response = inspectionService.Inspect(deviceId);
+                var response = inspectionService.Inspect(deviceAddress);
                 return Ok(response);
             }
             catch (BadRequestException ex) {
@@ -47,7 +44,9 @@ namespace WebApp.Controllers.v1
                 });
             }
             catch (DeviceNotFoundException) {
-                return NotFound();
+                return NotFound(new ErrorResponse {
+                    ErrorMessage = $"The light sensor at device address {deviceAddress} does not exist."
+                });
             }
         }
     }

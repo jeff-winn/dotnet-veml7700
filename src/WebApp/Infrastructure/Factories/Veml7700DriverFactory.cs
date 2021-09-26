@@ -18,9 +18,9 @@ namespace WebApp.Infrastructure.Factories {
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
         
-        public IAdafruit_VEML7700 Create(int deviceId)
+        public IAdafruit_VEML7700 Create(int deviceAddress)
         {
-            var driver = GetDeviceById(deviceId);				
+            var driver = GetDeviceById(deviceAddress);				
             var options = configuration.GetVeml7700Options();
 					
 
@@ -31,22 +31,22 @@ namespace WebApp.Infrastructure.Factories {
 			return driver;
         }
 
-        private IAdafruit_VEML7700 GetDeviceById(int deviceId) {
-            if (devices.TryGetValue(deviceId, out var device)) {
+        private IAdafruit_VEML7700 GetDeviceById(int deviceAddress) {
+            if (devices.TryGetValue(deviceAddress, out var device)) {
                 return device;
             }
 
             try {
                 device = new Adafruit_VEML7700(
-                    bus.CreateDevice(deviceId));
+                    bus.CreateDevice(deviceAddress));
                             
                 device.Init();
 
-                devices.Add(deviceId, device);
+                devices.Add(deviceAddress, device);
                 return device;
             }
             catch (IOException ex) {
-                throw new DeviceNotFoundException(deviceId, ex);
+                throw new DeviceNotFoundException(deviceAddress, ex);
             }
         }
     }

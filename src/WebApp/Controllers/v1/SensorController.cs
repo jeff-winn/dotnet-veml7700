@@ -11,7 +11,7 @@ namespace WebApp.Controllers.v1
     /// Interacts with the sensor hardware.
     /// </summary>
     [ApiController]
-    [Route("api/v1/light-sensor")]
+    [Route("api/v1/sensor")]
     public class SensorController : ControllerBase
     {
         private readonly IInspectionService inspectionService;
@@ -31,8 +31,7 @@ namespace WebApp.Controllers.v1
         /// <remarks>
         /// Inspects a specific Adafruit VEML7700 device at the device id address provided on the I2C bus.
         /// </remarks>
-        /// <example>inspect/16</example>
-        [HttpGet("inspect/{deviceId}")]
+        [HttpGet("{deviceId}")]
         [SwaggerResponse(StatusCodes.Status200OK, "The response successfully was able to read the light sensor data.", typeof(LuxResponse))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "The request was not valid.", typeof(ErrorResponse))]
         [SwaggerResponse(StatusCodes.Status404NotFound, "The light sensor requested was not found.", typeof(ErrorResponse))]

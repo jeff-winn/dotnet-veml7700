@@ -39,8 +39,10 @@ jobs:
 
     - name: Build Package
       uses: jiro4989/build-deb-action@v2
+      env:
+        VERSION: ${{ github.ref#refs/tags/ }}
       with:
         package: dotnet-veml7700
         package_root: pkg
         maintainer: Jeff Winn
-        version: ${ github.ref#refs/tags/ }
+        version: $VERSION

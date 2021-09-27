@@ -18,3 +18,9 @@ jobs:
     
     - name: Publish
       run: dotnet publish src/WebApp/WebApp.csproj --configuration Release --output bin --no-build
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: binaries
+        path: bin/

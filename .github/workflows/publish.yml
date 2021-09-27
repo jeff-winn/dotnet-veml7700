@@ -12,9 +12,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-
+    
     - name: Build
-      run: dotnet build --configuration Release
-
-    - name: Publish
-      run: dotnet publish src/WebApp/WebApp.csproj --configuration Release --output bin --no-build
+      run: dotnet publish src/WebApp/WebApp.csproj --configuration Release --output bin

@@ -24,3 +24,22 @@ jobs:
       with:
         name: binaries
         path: bin/
+
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+    - name: Download Artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: binaries
+        path: pkg/usr/bin/dotnet-veml7700
+
+    - name: Build Package
+      uses: jiro4989/build-deb-action@v2
+      with:
+        package: dotnet-veml7700
+        package_root: pkg
+        maintainer: Jeff Winn
+        version: refs/tags/v*.*.*

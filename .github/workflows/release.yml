@@ -43,4 +43,4 @@ jobs:
         package: dotnet-veml7700
         package_root: pkg
         maintainer: Jeff Winn
-        version: ${{GITHUB_REF#refs/tags/}}
+        version: ${{ env.GITHUB_REF#refs/tags/ }}

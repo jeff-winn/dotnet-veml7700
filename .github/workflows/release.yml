@@ -46,7 +46,7 @@ jobs:
         version: ${{ github.ref }}
         desc: |
           ASP.NET Core Web API for an Adafruit VEML7700 light sensor.
-        arch: arm64
+        arch: armhf
 
     - name: Upload package
       uses: actions/upload-artifact@v2

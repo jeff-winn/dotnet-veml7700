@@ -46,7 +46,7 @@ jobs:
         maintainer: github.com/jeff-winn
         version: ${{ github.ref }}
         desc: |
-          ASP.NET Core Web API for an Adafruit VEML7700 light sensor.
+          ASP.NET Core Web API for an Adafruit VEML7700 Lux sensor.
         arch: armhf
 
     - name: Upload package

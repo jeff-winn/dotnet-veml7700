@@ -17,7 +17,7 @@ jobs:
       run: dotnet build --configuration Release
     
     - name: Publish
-      run: dotnet publish src/WebApp/WebApp.csproj -c Release -r linux-arm64 --output bin
+      run: dotnet publish src/WebApp/WebApp.csproj -c Release -r linux-arm --output bin
 
     - name: Upload binaries
       uses: actions/upload-artifact@v2

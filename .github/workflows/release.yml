@@ -17,6 +17,7 @@ jobs:
       run: dotnet build --configuration Release
     
     - name: Publish
+      # https://docs.microsoft.com/en-us/dotnet/iot/deployment
       run: dotnet publish src/WebApp/WebApp.csproj -c Release -r linux-arm --output bin
 
     - name: Upload binaries

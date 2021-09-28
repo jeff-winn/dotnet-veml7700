@@ -19,7 +19,7 @@ jobs:
     - name: Publish
       run: dotnet publish src/WebApp/WebApp.csproj --configuration Release --output bin --no-build
 
-    - name: Upload Artifacts
+    - name: Upload binaries
       uses: actions/upload-artifact@v2
       with:
         name: binaries
@@ -31,16 +31,25 @@ jobs:
     needs: build
 
     steps:
-    - name: Download Artifacts
+    - name: Download binaries
       uses: actions/download-artifact@v2
       with:
         name: binaries
         path: pkg/usr/bin/dotnet-veml7700
 
-    - name: Build Package
+    - name: Build package
       uses: jiro4989/build-deb-action@v2
       with:
         package: dotnet-veml7700
         package_root: pkg
-        maintainer: Jeff Winn
+        maintainer: github.com/jeff-winn
+        description: |
+          .NET Core Web API for an Adafruit VEML7700 light sensor.
         version: ${{ github.ref }}
+        arch: arm64
+
+    - name: Upload package
+      uses: actions/upload-artifact@v2
+      with:
+        name: package
+        path: ./dotnet-veml7700*.deb

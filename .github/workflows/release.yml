@@ -14,7 +14,7 @@ jobs:
       uses: actions/checkout@v2
     
     - name: Build
-      run: dotnet build --configuration Release
+      run: dotnet build src/dotnet-veml7700.sln -c Release
     
     - name: Publish
       # https://docs.microsoft.com/en-us/dotnet/iot/deployment

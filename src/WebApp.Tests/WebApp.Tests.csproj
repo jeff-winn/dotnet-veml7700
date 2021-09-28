@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="../../.build/netcore.props" />
+  <Import Project="../.build/netcore.props" />
 
   <PropertyGroup>
     <IsPackable>false</IsPackable>

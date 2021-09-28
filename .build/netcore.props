@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RuntimeIdentifiers>linux-arm64</RuntimeIdentifiers>
   </PropertyGroup>
 
 </Project>

@@ -44,7 +44,10 @@ jobs:
         package_root: pkg
         maintainer: github.com/jeff-winn
         version: ${{ github.ref }}
+        desc: |
+          ASP.NET Core Web API for an Adafruit VEML7700 light sensor.
         arch: arm64
+        depends: aspnetcore-runtime-5.0
 
     - name: Upload package
       uses: actions/upload-artifact@v2

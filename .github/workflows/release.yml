@@ -43,8 +43,6 @@ jobs:
         package: dotnet-veml7700
         package_root: pkg
         maintainer: github.com/jeff-winn
-        description: |
-          .NET Core Web API for an Adafruit VEML7700 light sensor.
         version: ${{ github.ref }}
         arch: arm64
 

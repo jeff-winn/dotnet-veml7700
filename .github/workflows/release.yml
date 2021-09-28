@@ -40,7 +40,8 @@ jobs:
     - name: Build Package
       uses: jiro4989/build-deb-action@v2
       env:
-        VERSION: ${{ github.ref#refs/tags/ }}
+        VERSION: ${GITHUB_REF/refs\/tags\//}
+        
       with:
         package: dotnet-veml7700
         package_root: pkg

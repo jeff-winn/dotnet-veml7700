@@ -39,7 +39,7 @@ jobs:
         path: dpkg/usr/bin/dotnet-veml7700
 
     - name: Build package
-      run:
+      run: |
         VERSION="$(echo $GITHUB_REF | sed -E 's,^refs/tags/,,')"
         VERSION="$(echo $VERSION | sed -E 's/^v//')"
         sed -i 's/{VERSION}/$VERSION/g' 'dpkg/debian/control'

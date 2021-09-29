@@ -39,14 +39,14 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: binaries
-        path: dpkg/usr/bin/dotnet-veml7700
+        path: package/usr/bin/dotnet-veml7700
 
     - name: Build package
       run: |
         VERSION="$(echo $GITHUB_REF | sed -E 's,^refs/tags/,,')"
         VERSION="$(echo $VERSION | sed -E 's/^v//')"
         sed -i 's/{VERSION}/'$VERSION'/g' 'dpkg/DEBIAN/control'
-        dpkg-deb -b dpkg 'dotnet-veml7700_'"$VERSION"'_armhf.deb'
+        dpkg-deb -b package 'dotnet-veml7700_'"$VERSION"'_armhf.deb'
 
     - name: Upload package
       uses: actions/upload-artifact@v2

@@ -4,9 +4,9 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-Type=oneshot
+Environment=ASPNETCORE_URLS=http://*:8080
+WorkingDirectory=/usr/bin/dotnet-veml7700
 ExecStart=/usr/bin/dotnet-veml7700/WebApp
-RemainAfterExit=true
 
 [Install]
 WantedBy=multi-user.target

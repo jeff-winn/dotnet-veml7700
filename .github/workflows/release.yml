@@ -45,7 +45,7 @@ jobs:
       run: |
         VERSION="$(echo $GITHUB_REF | sed -E 's,^refs/tags/,,')"
         VERSION="$(echo $VERSION | sed -E 's/^v//')"
-        sed -i 's/{VERSION}/$VERSION/g' 'dpkg/debian/control'
+        sed -i 's/{VERSION}/$VERSION/g' 'dpkg/DEBIAN/control'
         DEB_FILE="dotnet-veml7700_$VERSION_armhf.deb"
         dpkg-deb -b dpkg $DEB_FILE
 

@@ -36,18 +36,15 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: binaries
-        path: pkg/usr/bin/dotnet-veml7700
+        path: dpkg/usr/bin/dotnet-veml7700
 
     - name: Build package
-      uses: jiro4989/build-deb-action@v2
-      with:
-        package: dotnet-veml7700
-        package_root: pkg
-        maintainer: github.com/jeff-winn
-        version: ${{ github.ref }}
-        desc: |
-          ASP.NET Core Web API for an Adafruit VEML7700 Lux sensor.
-        arch: armhf
+      run:
+        VERSION="$(echo $GITHUB_REF | sed -E 's,^refs/tags/,,')"
+        VERSION="$(echo $VERSION | sed -E 's/^v//')"
+        sed -i 's/{VERSION}/$VERSION/g' 'dpkg/debian/control'
+        DEB_FILE="dotnet-veml7700_$VERSION_armhf.deb"
+        dpkg-deb -b dpkg $DEB_FILE
 
     - name: Upload package
       uses: actions/upload-artifact@v2

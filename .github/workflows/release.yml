@@ -43,7 +43,7 @@ jobs:
         path: dpkg-build/usr/bin/dotnet-veml7700
 
     - name: Build package
-      run: chmod +x ./build_deb.sh & ./build_deb.sh
+      run: ./build_deb.sh
 
     - name: Upload package
       uses: actions/upload-artifact@v2

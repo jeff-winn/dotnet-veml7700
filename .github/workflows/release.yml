@@ -1,8 +1,8 @@
 name: Release
 
-on:
- release:
-   types: [created]
+#on:
+# release:
+#   types: [created]
 
 jobs:
   build:
@@ -42,11 +42,7 @@ jobs:
         path: dpkg-build/usr/bin/dotnet-veml7700
 
     - name: Build package
-      run: |
-        VERSION="$(echo $GITHUB_REF | sed -E 's,^refs/tags/,,')"
-        VERSION="$(echo $VERSION | sed -E 's/^v//')"
-        sed -i 's/{VERSION}/'$VERSION'/g' 'dpkg-build/DEBIAN/control'
-        dpkg-deb -b dpkg-build 'dotnet-veml7700_'"$VERSION"'_armhf.deb'
+      run: chmod +x build_deb.sh & build_deb.sh
 
     - name: Upload package
       uses: actions/upload-artifact@v2

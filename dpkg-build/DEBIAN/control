@@ -1,9 +1,8 @@
-Source: jeff-winn
+Source: dotnet-veml7700
+Version: ${VERSION}
 Maintainer: Jeff Winn <6961614+jeff-winn@users.noreply.github.com>
 Homepage: https://github.com/jeff-winn/dotnet-veml7700
-Build-Depends: dh-systemd (>= 1.5)
 Package: dotnet-veml7700
 Architecture: armhf
-Version: {VERSION}
 Description: 
   ASP.NET Core Web API to expose the sensor values from an Adafruit VEML7700 Lux Sensor.

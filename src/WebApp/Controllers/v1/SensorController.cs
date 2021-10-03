@@ -45,7 +45,7 @@ namespace WebApp.Controllers.v1
             }
             catch (DeviceNotFoundException) {
                 return NotFound(new ErrorResponse {
-                    ErrorMessage = $"The light sensor at device address {deviceAddress} does not exist."
+                    ErrorMessage = $"The sensor at device address {deviceAddress} does not exist."
                 });
             }
         }

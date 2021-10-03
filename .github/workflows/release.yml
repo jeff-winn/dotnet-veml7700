@@ -1,0 +1,51 @@
+name: Release
+
+on:
+ release:
+   types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: Build
+      run: dotnet build src/dotnet-veml7700.sln -c Release
+    
+    - name: Publish
+      # https://docs.microsoft.com/en-us/dotnet/iot/deployment
+      run: dotnet publish src/WebApp/WebApp.csproj -c Release -r linux-arm --output bin
+
+    - name: Upload binaries
+      uses: actions/upload-artifact@v2
+      with:
+        name: binaries
+        path: bin/
+
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: build
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Download binaries
+      uses: actions/download-artifact@v2
+      with:
+        name: binaries
+        path: dpkg-build/usr/bin/dotnet-veml7700
+
+    - name: Build package
+      run: ./build_deb.sh
+
+    - name: Upload package
+      uses: actions/upload-artifact@v2
+      with:
+        name: package
+        path: ./dotnet-veml7700*.deb

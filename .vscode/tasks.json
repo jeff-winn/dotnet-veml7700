@@ -24,6 +24,7 @@
 			"type": "shell",
 			"args": [
 				"build",
+				"src/dotnet-veml7700.sln",
 				"/property:GenerateFullPaths=true",
 				"/consoleloggerparameters:NoSummary"
 			],

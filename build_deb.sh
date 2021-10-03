@@ -1,5 +1,4 @@
 #!/bin/sh
-GITHUB_REF="refs/tags/0.0.1-rc1"
 VERSION="$(echo $GITHUB_REF | sed -E 's,^refs/tags/,,')"
 VERSION="$(echo $VERSION | sed -E 's/^v//')"
 

@@ -1,2 +1,3 @@
 #!/bin/sh
 chmod +x /usr/bin/dotnet-veml7700/WebApp
+systemctl daemon-reload

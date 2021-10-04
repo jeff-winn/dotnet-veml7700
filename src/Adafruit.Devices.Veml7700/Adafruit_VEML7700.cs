@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Device.I2c;
 using Adafruit.Devices.Primitives;
+using Microsoft.Extensions.Logging;
 
 #pragma warning disable CS8618 // Guaranteed to be set prior to use via required call to initialize.
 
@@ -13,6 +14,7 @@ namespace Adafruit.Devices.Veml7700
     public class Adafruit_VEML7700 : IAdafruit_VEML7700
     {
         private readonly II2cDevice device;
+        private readonly ILogger<Adafruit_VEML7700> logger;
 
         private II2cRegister configRegister;
         private II2cRegister dataRegister;
@@ -54,6 +56,8 @@ namespace Adafruit.Devices.Veml7700
         {
             get { return gain; }
             set {
+                GuardMustBeInitialized();
+
                 gain = value;
                 gainBits.Write((byte)value);
 
@@ -65,6 +69,8 @@ namespace Adafruit.Devices.Veml7700
         {
             get { return integrationTime; }
             set {
+                GuardMustBeInitialized();
+
                 integrationTime = value;
                 integrationTimeBits.Write((byte)value);
 
@@ -72,9 +78,10 @@ namespace Adafruit.Devices.Veml7700
             }
         }
 
-        public Adafruit_VEML7700(II2cDevice device)
+        public Adafruit_VEML7700(II2cDevice device, ILogger<Adafruit_VEML7700> logger)
         {
-            this.device = device;
+            this.device = device ?? throw new ArgumentNullException(nameof(device));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public void Init()
@@ -121,7 +128,11 @@ namespace Adafruit.Devices.Veml7700
         
         public float ReadLuxNormalized() 
         {
-            return ReadLux() * luxMultiplier;            
+            var lux = ReadLux();
+            var result = lux * luxMultiplier;
+
+            logger.LogTrace($"LuxNormalized: {result} = {lux} * {luxMultiplier}");
+            return result;
         }
 
         public ushort ReadWhite()
@@ -131,7 +142,11 @@ namespace Adafruit.Devices.Veml7700
 
         public float ReadWhiteNormalized()
         {
-            return ReadWhite() * luxMultiplier;
+            var white = ReadWhite();
+            var result = white * luxMultiplier;
+
+            logger.LogTrace($"WhiteNormalized: {result} = {white} * {luxMultiplier}");
+            return result;
         }
 
         private void AdjustLuxMultiplier() 

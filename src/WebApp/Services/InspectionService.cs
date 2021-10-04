@@ -29,10 +29,7 @@ namespace WebApp.Services {
             }
 
             var lux = driver.ReadLuxNormalized();
-            logger.LogTrace($"Lux: {lux}");
-
             var white = driver.ReadWhiteNormalized();
-            logger.LogTrace($"White: {white}");
 
             return new LuxResponse {
                 WhiteLight = white,

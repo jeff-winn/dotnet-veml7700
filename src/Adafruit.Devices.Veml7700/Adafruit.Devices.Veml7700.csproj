@@ -2,7 +2,8 @@
   <Import Project="../.build/netcore.props" />
 
   <ItemGroup>
-      <PackageReference Include="System.Device.Gpio" Version="1.5.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+    <PackageReference Include="System.Device.Gpio" Version="1.5.0" />
   </ItemGroup>
 
 </Project>

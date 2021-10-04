@@ -4,16 +4,19 @@ using System.Device.I2c;
 using System.IO;
 using Adafruit.Devices.Veml7700;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using WebApp.Exceptions;
 
 namespace WebApp.Infrastructure.Factories {
     class Veml7700DriverFactory : IVeml7700DriverFactory
     {
+        private readonly ILoggerFactory loggerFactory;
         private readonly II2cBus bus;
         private readonly IConfiguration configuration;
         private readonly Dictionary<int, IAdafruit_VEML7700> devices = new Dictionary<int, IAdafruit_VEML7700>();
 
-        public Veml7700DriverFactory(II2cBus bus, IConfiguration configuration) {
+        public Veml7700DriverFactory(ILoggerFactory loggerFactory, II2cBus bus, IConfiguration configuration) {
+            this.loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
             this.bus = bus ?? throw new ArgumentNullException(nameof(bus));
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
@@ -22,7 +25,6 @@ namespace WebApp.Infrastructure.Factories {
         {
             var driver = GetDeviceById(deviceAddress);				
             var options = configuration.GetVeml7700Options();
-					
 
 			driver.IsEnabled = true;
 			driver.Gain = options.Gain;
@@ -38,7 +40,8 @@ namespace WebApp.Infrastructure.Factories {
 
             try {
                 device = new Adafruit_VEML7700(
-                    bus.CreateDevice(deviceAddress));
+                    bus.CreateDevice(deviceAddress),
+                    loggerFactory.CreateLogger<Adafruit_VEML7700>());
                             
                 device.Init();
 

@@ -1,2 +1,10 @@
 # dotnet-veml7700
 ASP.NET Core Web API to expose the sensor values from an [Adafruit VEML7700 Lux Sensor](https://www.adafruit.com/product/4162).
+
+## Parts
+These are not affiliate links, they're only here so I know what parts I used to build the device.
+- [Raspberry Pi 3 Model A+](https://www.raspberrypi.com/products/raspberry-pi-3-model-a-plus/)
+- [Adafruit VEML7700 Lux Sensor](https://www.adafruit.com/product/4162)
+- [Breadboard Jumper Cables 2x4P 60CM Female to Female Dupont Cable](https://www.amazon.com/dp/B08NVKVSSP)
+- [Room Sensor Enclosure - Size 2](https://thepihut.com/products/room-sensor-enclosure-size-2-with-pi-3a-mounts) - NOTE: This did require modification to get the device to fit as noted on the enclosure.
+- [CanaKit 5V 2.5A Raspberry Pi 3 Power Supply](https://www.amazon.com/dp/B00MARDJZ4)

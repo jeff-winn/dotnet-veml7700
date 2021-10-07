@@ -28,11 +28,11 @@
 			"preLaunchTask": "publish",
 			"program": "/home/pi/.dotnet/dotnet",
 			"args": [
-				"/home/pi/app/net5.0/WebApp.dll",
+				"/home/pi/app/WebApp.dll",
 				"--urls",
 				"http://raspberrypi:8080"
 			],
-			"cwd": "/home/pi/app/net5.0",
+			"cwd": "/home/pi/app",
 			"stopAtEntry": false,
 			"console": "internalConsole",
 			"launchBrowser": {

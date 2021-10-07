@@ -16,3 +16,10 @@ scp dotnet-veml7700_<VERSION>_armhf.deb pi@raspberrypi:/home/pi
 ssh pi@raspberrypi
 sudo dpkg -i dotnet_veml7700_<VERSION>_armhf.deb
 ```
+After installation Swagger specification will be available at: http://raspberrypi:8080/swagger
+
+NOTE: If you wish to change the default port used for the server, you will need to change the ASPNETCORE_URLS environment variable setting held within the _/etc/systemd/system/dotnet-veml7700.service_ file on the device.
+```
+sudo nano /etc/systemd/system/dotnet-veml7700.service
+sudo systemctl daemon-reload
+```

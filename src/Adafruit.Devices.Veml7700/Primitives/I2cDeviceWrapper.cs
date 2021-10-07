@@ -9,9 +9,23 @@ namespace Adafruit.Devices.Primitives
 
         public I2cDeviceWrapper(I2cDevice device)
         {
-            this.device = device;
+            this.device = device ?? throw new ArgumentNullException(nameof(device));
         }
 
+        ~I2cDeviceWrapper() {
+            Dispose(false);
+        }
+
+        public void Dispose() {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing) {
+            if (disposing) {
+                device.Dispose();
+            }
+        }
         public byte ReadByte()
         {
             return device.ReadByte();

@@ -2,7 +2,7 @@ using System;
 
 namespace System.Device.I2c
 {
-    public interface II2cDevice {
+    public interface II2cDevice : IDisposable {
         byte ReadByte();
         void Read(Span<byte> buffer);
 

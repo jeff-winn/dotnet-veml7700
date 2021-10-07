@@ -24,9 +24,21 @@ namespace Adafruit.Devices.Veml7700
             this.readWhiteNormalizedValue = readWhiteNormalizedValue;
         }
 
+        ~FakeAdafruit_VEML7700() {
+            Dispose(false);
+        }
+
         public bool IsEnabled { get; set; }
         public GainLevel Gain { get; set; }
         public IntegrationTime IntegrationTime { get; set; }
+
+        public void Dispose() {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing) {
+        }
 
         public void Init()
         {

@@ -84,6 +84,21 @@ namespace Adafruit.Devices.Veml7700
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        ~Adafruit_VEML7700() {
+            Dispose(false);
+        }
+
+        public void Dispose() {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing) {
+            if (disposing) {
+                device.Dispose();
+            }
+        }
+
         public void Init()
         {
             if (initialized)

@@ -1,3 +1,4 @@
+using System;
 using System.Device.I2c;
 
 namespace Adafruit.Devices.Primitives
@@ -10,9 +11,17 @@ namespace Adafruit.Devices.Primitives
         }
 
         public II2cDevice CreateDevice(int deviceAddress) {
-            var device = bus.CreateDevice(deviceAddress);
+            I2cDevice device = null;
+            
+            try {
+                device = bus.CreateDevice(deviceAddress);
 
-            return new I2cDeviceWrapper(device);
+                return new I2cDeviceWrapper(device);                
+            }
+            catch (Exception) {
+                device?.Dispose();
+                throw;
+            }
         }
     }
 }

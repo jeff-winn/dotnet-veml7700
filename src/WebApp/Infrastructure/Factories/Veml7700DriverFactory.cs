@@ -8,12 +8,12 @@ using Microsoft.Extensions.Logging;
 using WebApp.Exceptions;
 
 namespace WebApp.Infrastructure.Factories {
-    class Veml7700DriverFactory : IVeml7700DriverFactory
+    class Veml7700DriverFactory : IVeml7700DriverFactory 
     {
         private readonly ILoggerFactory loggerFactory;
         private readonly II2cBus bus;
         private readonly IConfiguration configuration;
-        private readonly Dictionary<int, IAdafruit_VEML7700> devices = new Dictionary<int, IAdafruit_VEML7700>();
+        private readonly Dictionary<int, Adafruit_VEML7700> devices = new Dictionary<int, Adafruit_VEML7700>();
 
         public Veml7700DriverFactory(ILoggerFactory loggerFactory, II2cBus bus, IConfiguration configuration) {
             this.loggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
@@ -21,15 +21,14 @@ namespace WebApp.Infrastructure.Factories {
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
         
-        public IAdafruit_VEML7700 Create(int deviceAddress)
-        {
+        public IAdafruit_VEML7700 Create(int deviceAddress) {
             var driver = GetDeviceById(deviceAddress);				
             var options = configuration.GetVeml7700Options();
 
-			driver.IsEnabled = true;
 			driver.Gain = options.Gain;
 			driver.IntegrationTime = options.IntegrationTime;
-
+			driver.IsEnabled = true;
+            
 			return driver;
         }
 
@@ -44,13 +43,17 @@ namespace WebApp.Infrastructure.Factories {
                     loggerFactory.CreateLogger<Adafruit_VEML7700>());
                             
                 device.Init();
-
-                devices.Add(deviceAddress, device);
-                return device;
             }
             catch (IOException ex) {
-                throw new DeviceNotFoundException(deviceAddress, ex);
+                device?.Dispose();
+
+                throw new DeviceNotFoundException(
+                    deviceAddress, 
+                    ex);
             }
+
+            devices.Add(deviceAddress, device);
+            return device;
         }
     }
 }

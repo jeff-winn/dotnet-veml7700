@@ -14,7 +14,7 @@ These commands would be ran from the user workstation which has downloaded the D
 ```
 scp dotnet-veml7700_<VERSION>_armhf.deb pi@raspberrypi:/home/pi
 ssh pi@raspberrypi
-sudo dpkg -i dotnet_veml7700_<VERSION>_armhf.deb
+sudo dpkg -i dotnet-veml7700_<VERSION>_armhf.deb
 ```
 After installation Swagger specification will be available at: http://raspberrypi:8080/swagger
 

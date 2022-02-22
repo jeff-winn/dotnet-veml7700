@@ -10,7 +10,7 @@
 			"command": "scp",
 			"args": [
 				"-r",
-				"${workspaceFolder}/src/WebApp/bin/Debug/net5.0/*",
+				"${workspaceFolder}/src/WebApp/bin/Debug/net6.0/*",
 				"pi@raspberrypi:/home/pi/app/"
 			],
 			"presentation": {

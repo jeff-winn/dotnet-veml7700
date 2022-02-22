@@ -9,9 +9,9 @@
 			"type": "coreclr",
 			"request": "launch",			
 			"preLaunchTask": "build",
-			"program": "${workspaceFolder}/src/WebApp/bin/Debug/net5.0/WebApp.dll",
+			"program": "${workspaceFolder}/src/WebApp/bin/Debug/net6.0/WebApp.dll",
 			"args": [],
-			"cwd": "${workspaceFolder}/src/WebApp/bin/Debug/net5.0",
+			"cwd": "${workspaceFolder}/src/WebApp/bin/Debug/net6.0",
 			"stopAtEntry": false,
 			"serverReadyAction": {
 				"action": "openExternally",

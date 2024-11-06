@@ -1,17 +1,30 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F3CA8129-C196-4C4B-8CE6-9DC673D9639D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1AA1AD7B-D04E-4417-B238-9B05FB6BB8F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{FB2AA864-571B-4EB6-8A48-D4D39F3D8B9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{FB2AA864-571B-4EB6-8A48-D4D39F3D8B9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp.Tests", "WebApp.Tests\WebApp.Tests.csproj", "{A9C1B217-A8A5-4E87-A718-3F0A2E3DC8C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp.Tests", "WebApp.Tests\WebApp.Tests.csproj", "{A9C1B217-A8A5-4E87-A718-3F0A2E3DC8C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adafruit.Devices.Veml7700", "Adafruit.Devices.Veml7700\Adafruit.Devices.Veml7700.csproj", "{0D10AF35-0CD1-4BF3-B36F-769B5A46EE9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adafruit.Devices.Veml7700", "Adafruit.Devices.Veml7700\Adafruit.Devices.Veml7700.csproj", "{0D10AF35-0CD1-4BF3-B36F-769B5A46EE9A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{38FE6408-E854-4940-95F3-CEF6C83F0CD6}"
+	ProjectSection(SolutionItems) = preProject
+		.build\netcore.props = .build\netcore.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{1906287B-60A7-4781-A382-DDB75D660EF2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{EF659687-1615-42CB-977D-FB0BADED6598}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\ci.yml = ..\.github\workflows\ci.yml
+		..\.github\workflows\release.yml = ..\.github\workflows\release.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +80,8 @@ Global
 		{FB2AA864-571B-4EB6-8A48-D4D39F3D8B9C} = {F3CA8129-C196-4C4B-8CE6-9DC673D9639D}
 		{A9C1B217-A8A5-4E87-A718-3F0A2E3DC8C9} = {1AA1AD7B-D04E-4417-B238-9B05FB6BB8F5}
 		{0D10AF35-0CD1-4BF3-B36F-769B5A46EE9A} = {F3CA8129-C196-4C4B-8CE6-9DC673D9639D}
+		{38FE6408-E854-4940-95F3-CEF6C83F0CD6} = {F3CA8129-C196-4C4B-8CE6-9DC673D9639D}
+		{EF659687-1615-42CB-977D-FB0BADED6598} = {1906287B-60A7-4781-A382-DDB75D660EF2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CBB7E9E6-95FE-4208-B38F-982B28DDBB76}

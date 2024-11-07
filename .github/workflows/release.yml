@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     
     - name: Build
       run: dotnet build src/dotnet-veml7700.sln -c Release
@@ -21,7 +21,7 @@ jobs:
       run: dotnet publish src/WebApp/WebApp.csproj -c Release -r linux-arm --output bin
 
     - name: Upload binaries
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: binaries
         path: bin/
@@ -33,10 +33,10 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Download binaries
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v4
       with:
         name: binaries
         path: dpkg-build/usr/bin/dotnet-veml7700
@@ -45,7 +45,7 @@ jobs:
       run: ./build_deb.sh
 
     - name: Upload package
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: package
         path: ./dotnet-veml7700*.deb
